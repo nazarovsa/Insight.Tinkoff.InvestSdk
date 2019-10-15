@@ -1,7 +1,7 @@
 using Insight.Tinkoff.Invest.Infrastructure;
 using Newtonsoft.Json;
 
-namespace Insight.Tinkoff.Invest.Dto.Market.Responses
+namespace Insight.Tinkoff.Invest.Dto.Responses
 {
     public sealed class MarketInstrumentSearchResponse : ResponseBase
     {

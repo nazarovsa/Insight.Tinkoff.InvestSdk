@@ -1,7 +1,7 @@
 using System;
 using System.Runtime.Serialization;
 
-namespace Insight.Tinkoff.Invest.Dto.Operations
+namespace Insight.Tinkoff.Invest.Dto
 {
     public sealed class OperationTrade 
     {

@@ -2,7 +2,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Newtonsoft.Json;
 
-namespace Insight.Tinkoff.Invest.Dto.Stream.Payloads
+namespace Insight.Tinkoff.Invest.Dto.Payloads
 {
     public sealed class OrderBookPayload
     {

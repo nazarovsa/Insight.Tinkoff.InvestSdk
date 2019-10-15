@@ -1,4 +1,4 @@
-namespace Insight.Tinkoff.Invest.Dto.Operations
+namespace Insight.Tinkoff.Invest.Dto
 {
     public enum OperationInterval
     {

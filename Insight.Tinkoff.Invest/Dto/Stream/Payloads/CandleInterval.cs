@@ -2,7 +2,7 @@ using System.Runtime.Serialization;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
 
-namespace Insight.Tinkoff.Invest.Dto.Stream.Payloads
+namespace Insight.Tinkoff.Invest.Dto.Payloads
 {
     [JsonConverter(typeof(StringEnumConverter))]
     public enum CandleInterval

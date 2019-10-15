@@ -1,7 +1,6 @@
-using Insight.Tinkoff.Invest.Dto.Portfolio;
 using Newtonsoft.Json;
 
-namespace Insight.Tinkoff.Invest.Dto.Orders
+namespace Insight.Tinkoff.Invest.Dto
 {
     public sealed class PlacedLimitOrder
     { 

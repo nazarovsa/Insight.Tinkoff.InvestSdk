@@ -1,6 +1,6 @@
-using Insight.Tinkoff.Invest.Dto.Stream.Payloads;
+using Insight.Tinkoff.Invest.Dto.Payloads;
 
-namespace Insight.Tinkoff.Invest.Dto.Stream.Messages.Out
+namespace Insight.Tinkoff.Invest.Dto.Messages
 {
     public sealed class UnsubscribeCandleMessage : IWsMessage
     {

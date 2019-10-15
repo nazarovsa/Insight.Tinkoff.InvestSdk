@@ -1,4 +1,4 @@
-namespace Insight.Tinkoff.Invest.Dto.Orders
+namespace Insight.Tinkoff.Invest.Dto
 {
     public sealed class LimitOrderRequest
     {

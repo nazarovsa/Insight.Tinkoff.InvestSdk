@@ -1,9 +1,9 @@
 using System.Threading;
 using System.Threading.Tasks;
-using Insight.Tinkoff.Invest.Domain.Services;
-using Insight.Tinkoff.Invest.Dto.Operations;
+using Insight.Tinkoff.Invest.Domain;
+using Insight.Tinkoff.Invest.Dto;
 using Insight.Tinkoff.Invest.Infrastructure;
-using Insight.Tinkoff.Invest.Services.Rest;
+using Insight.Tinkoff.Invest.Services;
 using Insight.Tinkoff.Invest.Tests.Base;
 using Xunit;
 

@@ -1,4 +1,4 @@
-namespace Insight.Tinkoff.Invest.Dto.Stream.Messages.Out
+namespace Insight.Tinkoff.Invest.Dto.Messages
 {
     public sealed class SubscribeInstrumentInfo : IWsMessage
     {

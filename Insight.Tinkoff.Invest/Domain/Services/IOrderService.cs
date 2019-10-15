@@ -1,10 +1,10 @@
 using System.Threading;
 using System.Threading.Tasks;
-using Insight.Tinkoff.Invest.Dto.Orders;
-using Insight.Tinkoff.Invest.Dto.Orders.Responses;
+using Insight.Tinkoff.Invest.Dto;
+using Insight.Tinkoff.Invest.Dto.Responses;
 using Insight.Tinkoff.Invest.Infrastructure;
 
-namespace Insight.Tinkoff.Invest.Domain.Services
+namespace Insight.Tinkoff.Invest.Domain
 {
     public interface IOrderService
     {

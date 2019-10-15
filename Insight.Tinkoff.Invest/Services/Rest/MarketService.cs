@@ -1,11 +1,11 @@
 ﻿using System.Threading;
 using System.Threading.Tasks;
-using Insight.Tinkoff.Invest.Domain.Services;
-using Insight.Tinkoff.Invest.Dto.Market.Responses;
+using Insight.Tinkoff.Invest.Domain;
+using Insight.Tinkoff.Invest.Dto.Responses;
 using Insight.Tinkoff.Invest.Infrastructure;
 using Insight.Tinkoff.Invest.Infrastructure.Services;
 
-namespace Insight.Tinkoff.Invest.Services.Rest
+namespace Insight.Tinkoff.Invest.Services
 {
     public sealed class MarketService : TinkoffRestService, IMarketService
     {

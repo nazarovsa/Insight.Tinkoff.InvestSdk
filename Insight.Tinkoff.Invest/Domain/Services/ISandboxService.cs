@@ -1,9 +1,9 @@
 using System.Threading;
 using System.Threading.Tasks;
-using Insight.Tinkoff.Invest.Dto.Sandbox;
+using Insight.Tinkoff.Invest.Dto;
 using Insight.Tinkoff.Invest.Infrastructure;
 
-namespace Insight.Tinkoff.Invest.Domain.Services
+namespace Insight.Tinkoff.Invest.Domain
 {
     public interface ISandboxService
     {

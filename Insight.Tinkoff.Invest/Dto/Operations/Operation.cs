@@ -1,9 +1,8 @@
 using System;
 using System.Collections.Generic;
 using System.Runtime.Serialization;
-using Insight.Tinkoff.Invest.Dto.Portfolio;
 
-namespace Insight.Tinkoff.Invest.Dto.Operations
+namespace Insight.Tinkoff.Invest.Dto
 {
     public sealed class Operation
     { 

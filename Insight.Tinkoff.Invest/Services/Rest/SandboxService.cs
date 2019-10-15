@@ -1,13 +1,12 @@
 ﻿using System.Threading;
 using System.Threading.Tasks;
-using Insight.Tinkoff.Invest.Domain.Services;
-using Insight.Tinkoff.Invest.Dto.Sandbox;
+using Insight.Tinkoff.Invest.Domain;
+using Insight.Tinkoff.Invest.Dto;
 using Insight.Tinkoff.Invest.Infrastructure;
 using Insight.Tinkoff.Invest.Infrastructure.Json;
 using Insight.Tinkoff.Invest.Infrastructure.Services;
-using Newtonsoft.Json;
 
-namespace Insight.Tinkoff.Invest.Services.Rest
+namespace Insight.Tinkoff.Invest.Services
 {
     public sealed class SandboxService : TinkoffRestService, ISandboxService
     {

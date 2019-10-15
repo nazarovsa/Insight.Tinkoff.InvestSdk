@@ -3,15 +3,13 @@ using System.Collections.Generic;
 using System.Reactive.Linq;
 using System.Threading;
 using System.Threading.Tasks;
-using Insight.Tinkoff.Invest.Domain.Services;
-using Insight.Tinkoff.Invest.Dto.Stream.Messages;
-using Insight.Tinkoff.Invest.Dto.Stream.Messages.Income;
+using Insight.Tinkoff.Invest.Domain;
+using Insight.Tinkoff.Invest.Dto.Messages;
 using Insight.Tinkoff.Invest.Infrastructure;
 using Insight.Tinkoff.Invest.Infrastructure.Json;
-using Newtonsoft.Json;
 using PureWebSockets;
 
-namespace Insight.Tinkoff.Invest.Services.Stream
+namespace Insight.Tinkoff.Invest.Services
 {
     public sealed class StreamMarketService : IStreamMarketService, IDisposable
     {

@@ -1,4 +1,4 @@
-namespace Insight.Tinkoff.Invest.Dto.Stream.Messages
+namespace Insight.Tinkoff.Invest.Dto.Messages
 {
     internal static class EventTypes
     {

@@ -1,4 +1,4 @@
-namespace Insight.Tinkoff.Invest.Dto.Portfolio
+namespace Insight.Tinkoff.Invest.Dto
 {
     public sealed class PortfolioPosition
     {

@@ -1,8 +1,8 @@
 using System.Threading;
 using System.Threading.Tasks;
-using Insight.Tinkoff.Invest.Dto.Portfolio.Responses;
+using Insight.Tinkoff.Invest.Dto.Responses;
 
-namespace Insight.Tinkoff.Invest.Domain.Services
+namespace Insight.Tinkoff.Invest.Domain
 {
     public interface IPortfolioService
     {

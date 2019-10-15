@@ -1,5 +1,5 @@
 using System;
-using Insight.Tinkoff.Invest.Dto.Operations;
+using Insight.Tinkoff.Invest.Dto;
 
 namespace Insight.Tinkoff.Invest.Infrastructure
 {

@@ -1,13 +1,11 @@
-﻿using System;
-using System.Threading;
+﻿using System.Threading;
 using System.Threading.Tasks;
-using Insight.Tinkoff.Invest.Domain.Services;
-using Insight.Tinkoff.Invest.Dto.Operations;
-using Insight.Tinkoff.Invest.Dto.Operations.Responses;
+using Insight.Tinkoff.Invest.Domain;
+using Insight.Tinkoff.Invest.Dto.Responses;
 using Insight.Tinkoff.Invest.Infrastructure;
 using Insight.Tinkoff.Invest.Infrastructure.Services;
 
-namespace Insight.Tinkoff.Invest.Services.Rest
+namespace Insight.Tinkoff.Invest.Services
 {
     public sealed class OperationService : TinkoffRestService, IOperationService
     {
