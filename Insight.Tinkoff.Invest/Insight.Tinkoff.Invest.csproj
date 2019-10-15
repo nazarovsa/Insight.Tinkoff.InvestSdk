@@ -1,0 +1,19 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <TargetFramework>netcoreapp2.2</TargetFramework>
+        <LangVersion>7.3</LangVersion>
+    </PropertyGroup>
+
+    <ItemGroup>
+      <PackageReference Include="MimeMapping" Version="1.0.1.17" />
+      <PackageReference Include="Newtonsoft.Json" Version="12.0.2" />
+      <PackageReference Include="PureWebSockets" Version="3.0.0" />
+      <PackageReference Include="System.Reactive" Version="4.1.6" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <Folder Include="Dto\Stream" />
+    </ItemGroup>
+
+</Project>
