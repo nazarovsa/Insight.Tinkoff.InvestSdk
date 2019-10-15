@@ -4,8 +4,8 @@ namespace Insight.Tinkoff.Invest.Dto
     {
         public Currency Currency { get; set; }
 
-        public double Balance { get; set; }
+        public decimal Balance { get; set; }
 
-        public double Blocked { get; set; }
+        public decimal Blocked { get; set; }
     }
 }

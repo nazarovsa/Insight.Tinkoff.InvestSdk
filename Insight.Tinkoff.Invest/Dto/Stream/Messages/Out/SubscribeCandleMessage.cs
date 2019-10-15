@@ -4,7 +4,7 @@ namespace Insight.Tinkoff.Invest.Dto.Messages
 {
     public sealed class SubscribeCandleMessage : IWsMessage
     {
-        public string Event { get; } = "candle:subscribe";
+        public string Event => "candle:subscribe";
         
         public string Figi { get; set; }
         
