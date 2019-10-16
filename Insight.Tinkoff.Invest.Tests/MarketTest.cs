@@ -1,6 +1,8 @@
+using System;
 using System.Threading;
 using System.Threading.Tasks;
 using Insight.Tinkoff.Invest.Domain;
+using Insight.Tinkoff.Invest.Dto.Payloads;
 using Insight.Tinkoff.Invest.Dto.Responses;
 using Insight.Tinkoff.Invest.Services;
 using Insight.Tinkoff.Invest.Tests.Base;
@@ -11,7 +13,8 @@ namespace Insight.Tinkoff.Invest.Tests
     public class MarketTest : TestBase
     {
         private readonly IMarketService _marketService;
-        
+        private readonly string _accentureFigi = "BBG000D9D830";
+
         public MarketTest()
         {
             _marketService = new MarketService(RestConfiguration);
@@ -45,7 +48,6 @@ namespace Insight.Tinkoff.Invest.Tests
             ValidateInstrumentsResponse(response);
         }
 
-        
         [Fact]
         public async Task Should_get_etfs()
         {
@@ -53,6 +55,29 @@ namespace Insight.Tinkoff.Invest.Tests
             
             ValidateRestResponse(response);
             ValidateInstrumentsResponse(response);
+        }
+        
+        [Fact]
+        public async Task Should_get_orderbook()
+        {
+            var response = await _marketService.GetOrderBook(_accentureFigi, 5, CancellationToken.None);
+            
+            ValidateRestResponse(response);
+            Assert.NotNull(response.OrderBook);
+            Assert.False(string.IsNullOrWhiteSpace(response.OrderBook.Figi));
+            Assert.Equal(5, response.OrderBook.Depth);
+            Assert.NotNull(response.OrderBook.Asks);
+            Assert.NotNull(response.OrderBook.Bids);
+        }
+        
+        [Fact]
+        public async Task Should_get_candles()
+        {
+            var response = await _marketService.GetCandles(_accentureFigi, DateTime.Now - TimeSpan.FromDays(1), DateTime.Now, CandleInterval.Hour, CancellationToken.None);
+            
+            ValidateRestResponse(response);
+            Assert.False(string.IsNullOrWhiteSpace(response.Figi));
+            Assert.NotNull(response.Candles);
         }
 
         private void ValidateInstrumentsResponse(MarketInstrumentListResponse response)

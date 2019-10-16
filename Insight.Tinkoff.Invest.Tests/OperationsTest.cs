@@ -19,7 +19,7 @@ namespace Insight.Tinkoff.Invest.Tests
         }
 
         [Fact]
-        public async Task Should_get_currencies()
+        public async Task Should_get_operations()
         {
             var filter = new OperationsFilter
             {

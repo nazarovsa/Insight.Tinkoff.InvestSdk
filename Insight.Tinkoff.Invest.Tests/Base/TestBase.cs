@@ -1,6 +1,7 @@
 ﻿using System;
 using System.IO;
 using Insight.Tinkoff.Invest.Infrastructure;
+using Insight.Tinkoff.Invest.Infrastructure.Configurations;
 using Newtonsoft.Json.Linq;
 using Xunit;
 

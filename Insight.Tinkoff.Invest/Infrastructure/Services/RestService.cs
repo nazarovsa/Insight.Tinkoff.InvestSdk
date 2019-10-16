@@ -14,14 +14,14 @@ namespace Insight.Tinkoff.Invest.Infrastructure.Services
     public abstract class RestService
     {
         private HttpClient _client;
-        
+
         protected string BaseUrl { get; }
 
         protected RestService(string baseUrl)
         {
             if (string.IsNullOrWhiteSpace(baseUrl))
                 throw new ArgumentNullException(nameof(baseUrl));
-            
+
             BaseUrl = baseUrl;
         }
 
@@ -59,25 +59,25 @@ namespace Insight.Tinkoff.Invest.Infrastructure.Services
             return await GetResponseItem<T>(path, response);
         }
 
-        private async Task<T> GetResponseItem<T>(string path, HttpResponseMessage response)
+        protected virtual async Task<T> GetResponseItem<T>(string path, HttpResponseMessage response)
         {
+            var json = await GetResponseString(response);
             if (response.StatusCode != HttpStatusCode.OK)
                 throw new RestServiceException(GetRestServiceExceptionMessage(path, response.StatusCode));
-
-            var json = await GetResponseString(response);
+            
             return JSerializer.Deserialize<T>(json);
         }
 
-        private Uri GetRequestUrl(string path)
+        protected Uri GetRequestUrl(string path)
         {
             return new UriBuilder($"{BaseUrl}{path}").Uri;
         }
 
-        private async Task<string> GetResponseString(HttpResponseMessage response)
+        protected async Task<string> GetResponseString(HttpResponseMessage response)
             => Encoding.UTF8.GetString(await response.Content.ReadAsByteArrayAsync());
 
-        private string GetRestServiceExceptionMessage(string path, HttpStatusCode code)
-            => $"Ошибка в результате запроса к апи. Url: {path} Код: {(int)code}";
+        protected string GetRestServiceExceptionMessage(string path, HttpStatusCode code)
+            => $"Ошибка в результате запроса к апи. Url: {path} Код: {(int) code}";
 
         private HttpClient EnsureHttpClientCreated()
         {
@@ -86,7 +86,7 @@ namespace Insight.Tinkoff.Invest.Infrastructure.Services
 
             return _client;
         }
-        
+
         protected virtual HttpClient CreateClient()
         {
             return new HttpClient {BaseAddress = new Uri(BaseUrl)};

@@ -1,5 +1,10 @@
 ﻿using System;
+using System.Net;
 using System.Net.Http;
+using System.Threading.Tasks;
+using Insight.Tinkoff.Invest.Infrastructure.Configurations;
+using Insight.Tinkoff.Invest.Infrastructure.Exceptions;
+using Insight.Tinkoff.Invest.Infrastructure.Json;
 
 namespace Insight.Tinkoff.Invest.Infrastructure.Services
 {
@@ -18,6 +23,21 @@ namespace Insight.Tinkoff.Invest.Infrastructure.Services
                 throw new ArgumentNullException(nameof(configuration));
 
             Configuration = configuration;
+        }
+
+        protected override async Task<T> GetResponseItem<T>(string path, HttpResponseMessage response)
+        {
+            var json = await GetResponseString(response);
+            if (response.StatusCode != HttpStatusCode.OK)
+            {
+                var errorResponse = JSerializer.Deserialize<ErrorResponse>(json);
+                if (errorResponse == null)
+                    throw new RestServiceException(GetRestServiceExceptionMessage(path, response.StatusCode));
+                
+                throw new RestServiceException(errorResponse.Payload.Message, errorResponse);
+            }
+
+            return JSerializer.Deserialize<T>(json);
         }
 
         protected override HttpClient CreateClient()

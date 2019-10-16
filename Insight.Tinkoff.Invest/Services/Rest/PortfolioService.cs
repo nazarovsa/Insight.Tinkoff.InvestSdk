@@ -3,6 +3,7 @@ using System.Threading.Tasks;
 using Insight.Tinkoff.Invest.Domain;
 using Insight.Tinkoff.Invest.Dto.Responses;
 using Insight.Tinkoff.Invest.Infrastructure;
+using Insight.Tinkoff.Invest.Infrastructure.Configurations;
 using Insight.Tinkoff.Invest.Infrastructure.Services;
 
 namespace Insight.Tinkoff.Invest.Services

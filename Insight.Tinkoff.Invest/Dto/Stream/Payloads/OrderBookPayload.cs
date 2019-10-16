@@ -4,7 +4,7 @@ using Newtonsoft.Json;
 
 namespace Insight.Tinkoff.Invest.Dto.Payloads
 {
-    public sealed class OrderBookPayload
+    public class OrderBookPayload
     {
         [JsonConstructor]
         public OrderBookPayload(
@@ -16,10 +16,10 @@ namespace Insight.Tinkoff.Invest.Dto.Payloads
             Figi = figi;
             Depth = depth;
             Asks = asks
-                .Select(x => new LotOffer {Price = x[0], Amount = x[1]})
+                .Select(x => new LotOffer {Price = x[0], Quantity = x[1]})
                 .ToList();
             Bids = bids
-                .Select(x => new LotOffer {Price = x[0], Amount = x[1]})
+                .Select(x => new LotOffer {Price = x[0], Quantity = x[1]})
                 .ToList();
         }
 
@@ -33,21 +33,18 @@ namespace Insight.Tinkoff.Invest.Dto.Payloads
         /// <summary>
         /// Массив [Цена, Количество] предложений цены
         /// </summary>
-        public List<LotOffer> Bids { get; set; }
+        public IReadOnlyCollection<LotOffer> Bids { get; set; }
 
         /// <summary>
         /// Массив [Цена, Количество] запросов цены
         /// </summary>
-        public List<LotOffer> Asks { get; set; }
+        public IReadOnlyCollection<LotOffer> Asks { get; set; }
+    }
 
-        /// <summary>
-        /// Обертка над убогими массивами массивов
-        /// </summary>
-        public sealed class LotOffer
-        {
-            public decimal Price { get; set; }
+    public sealed class LotOffer
+    {
+        public decimal Price { get; set; }
 
-            public decimal Amount { get; set; }
-        }
+        public decimal Quantity { get; set; }
     }
 }

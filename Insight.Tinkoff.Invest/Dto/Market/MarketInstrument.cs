@@ -7,14 +7,15 @@ namespace Insight.Tinkoff.Invest.Dto
         public string Ticker { get; set; }
 
         public string Isin { get; set; }
+        
+        public string Name { get; set; }
 
         public decimal MinPriceIncrement { get; set; }
 
         public int Lot { get; set; }
         
-        /// <summary>
-        /// Gets or Sets Currency
-        /// </summary>
         public Currency Currency { get; set; }
     }
+    
+    
 }

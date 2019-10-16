@@ -16,6 +16,10 @@ namespace Insight.Tinkoff.Invest.Dto
 
         public MoneyAmount ExpectedYield { get; set; }
 
+        public MoneyAmount AveragePositionPrice { get; set; }
+
+        public MoneyAmount AveragePositionNoNkd { get; set; }
+
         public int Lots { get; set; }
     }
 }

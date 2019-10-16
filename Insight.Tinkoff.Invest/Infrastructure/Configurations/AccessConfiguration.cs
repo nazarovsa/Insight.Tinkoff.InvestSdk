@@ -1,4 +1,4 @@
-﻿namespace Insight.Tinkoff.Invest.Infrastructure
+﻿namespace Insight.Tinkoff.Invest.Infrastructure.Configurations
 {
     public sealed class TinkoffRestServiceConfiguration
     {
