@@ -7,7 +7,7 @@ namespace Insight.Tinkoff.Invest.Dto.Responses
 {
     public sealed class MarketInstrumentListResponse : ResponseBase
     {
-        public decimal Total { get; }
+        public int Total { get; }
 
         public IReadOnlyCollection<MarketInstrument> Instruments { get; }
 

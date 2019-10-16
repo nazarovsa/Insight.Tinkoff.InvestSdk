@@ -8,7 +8,7 @@
         <PackageProjectUrl>https://github.com/InsightAppDev/TinkoffInvestNetSdk/</PackageProjectUrl>
         <RepositoryUrl>https://github.com/InsightAppDev/TinkoffInvestNetSdk/</RepositoryUrl>
         <RepositoryType>Github</RepositoryType>
-        <PackageVersion>1.0.0</PackageVersion>
+        <PackageVersion>1.0.1</PackageVersion>
         <TargetFrameworks>netstandard2.0;netcoreapp2.2</TargetFrameworks>
         <PackageId>Insight.Tinkoff.InvestSdk</PackageId>
     </PropertyGroup>
