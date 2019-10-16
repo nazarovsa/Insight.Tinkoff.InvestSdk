@@ -2,8 +2,12 @@ Unofficial Tinkoff Invest .Net Sdk
 ====================
 [![nuget version](https://img.shields.io/nuget/v/Insight.Tinkoff.InvestSdk)](https://www.nuget.org/packages/Insight.Tinkoff.InvestSdk/)
 
+About
+-------------------
+Данное sdk предназначено для взаимодействия с [OpenApi Тинькофф Инвестиций](https://tinkoffcreditsystems.github.io/invest-openapi/). Так как на момент публикации [официального sdk](https://github.com/TinkoffCreditSystems/invest-openapi-csharp-sdk) больше половины работы над данным проектом было закончено, я решил, что буду пользоваться им и поддерживать по мере возможности. Вопросы и предложения прошу в [Issues](https://github.com/InsightAppDev/TinkoffInvestNetSdk/issues).
+
 Get started
---------------------
+-------------------- 
 Для начала вам необходимо получить токен, процедура подробно описана [здесь](https://github.com/TinkoffCreditSystems/invest-openapi-csharp-sdk#где-взять-токен-аутентификации)
 
 Структура SDK
@@ -16,7 +20,7 @@ Get started
 * *SandboxService* - Взаимодействие с песочницей (Rest, реализует **[ISandboxService](https://github.com/InsightAppDev/TinkoffInvestNetSdk/blob/master/Insight.Tinkoff.Invest/Domain/Services/ISandboxService.cs)**)
 * *StreamMarketService* - Взаимодействие с API по протоколу WebSocket (WebSocket, Реализует **[IStreamMarketService](https://github.com/InsightAppDev/TinkoffInvestNetSdk/blob/master/Insight.Tinkoff.Invest/Domain/Services/IStreamMarketService.cs)**)
 
-Все Rest сервисы инициализируются объектом конфигурации типа **TinkoffRestServiceConfiguration**, он содержит в себе 3 свойства:
+Все Rest сервисы инициализируются объектом конфигурации типа **TinkoffRestServiceConfiguration**:
 * *string AccessToken* - Токен доступа к API
 * *string BaseUrl* - Базовый адрес API, default = "https://api-invest.tinkoff.ru"
 * *bool SandboxMode* - Признак активна ли песочница, default = true
@@ -37,13 +41,13 @@ public interface IStreamMarketService
 }
 ```
 
-Соотвественно метод Send служит для отправки сообщений на подписку/отписку от событий. Типы отправляемых сообщений реализуют интерфейс *IWsMessage*: *SubscribeCandleMessage*, *UnsubscribeCandleMessage*, *SubscribeOrderBookMessage*, *UnsubscribeOrderBookMessage*, *SubscribeInstrumentInfoMessage*, *UnsubscribeInstrumentInfoMessage*;
-Метод AsObservable() реализован с помощью [System.Reactive](https://www.nuget.org/packages/System.Reactive/), а именно с помощью *Observable.FromEventPattern*, на выходе вы получаете Push коллекцию, в которую будут приходить сообщения типа *WsMessage*: *CandleMessage*, *OrderBookMessage*, *InstrumentInfoMessage*. На выходе сообщения десериализуются в правильный тип на основе свойства Event, вы можете использовать Pattern Matching. Пример кода:
+Соотвественно метод Send служит для отправки сообщений на подписку/отписку от событий. Типы исходящих сообщений реализуют интерфейс *IWsMessage*: *SubscribeCandleMessage*, *UnsubscribeCandleMessage*, *SubscribeOrderBookMessage*, *UnsubscribeOrderBookMessage*, *SubscribeInstrumentInfoMessage*, *UnsubscribeInstrumentInfoMessage*;
+Метод AsObservable() реализован с помощью [System.Reactive](https://www.nuget.org/packages/System.Reactive/), а именно с помощью *Observable.FromEventPattern*, благодаря этому вы получаете Push коллекцию, в которую будут приходить сообщения типа *WsMessage*: *CandleMessage*, *OrderBookMessage*, *InstrumentInfoMessage*. На выходе сообщения десериализуются в правильный тип на основе свойства Event, вы можете использовать Pattern Matching. Пример кода:
 ```
-public sealed class Programm {
+public sealed class Program {
   private StreamMarketServiceConfiguration _config;
   
-  public Programm(StreamMarketServiceConfiguration config) {
+  public Program(StreamMarketServiceConfiguration config) {
     if(config == null)
       throw new ArgumentNullException(nameof(config));
       
@@ -59,13 +63,7 @@ public sealed class Programm {
         {
           switch (x)
           {
-            case OrderBookMessage message:
-              Console.WriteLine($"type: {message}, figi: {message.Payload.Figi}");
-              break;
             case CandleMessage message:
-              Console.WriteLine($"type: {message}, figi: {message.Payload.Figi}");
-              break;
-            case InstrumentInfoMessage message:
               Console.WriteLine($"type: {message}, figi: {message.Payload.Figi}");
               break;
             default:
@@ -95,6 +93,9 @@ public sealed class Programm {
   }
 }
 ```
-Важно: 
-* *AsObservable* сам откроет соединение, поэтому если вы вызовете его до метода *Send*, то соединение открывать не нужно.
-* *RetryAfterDelay* - лечит разрыв соединения.
+
+**RetryAfterDelay** - лечит разрыв соединения.
+
+Тесты
+---------------
+Вы можете запустить примитивные тесты для Rest сервисов добавив в файл [Insight.Tinkoff.Invest.Tests/appsettings.json](https://github.com/InsightAppDev/TinkoffInvestNetSdk/blob/master/Insight.Tinkoff.Invest.Tests/appsettings.json) токен для сандбокса. По дефолту изменения файла игнорируются в .gitignore
