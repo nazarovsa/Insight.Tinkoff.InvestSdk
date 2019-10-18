@@ -1,6 +1,8 @@
 Unofficial Tinkoff Invest .Net Sdk
 ====================
+[![Build Status](https://travis-ci.org/InsightAppDev/TinkoffInvestNetSdk.svg?branch=master)](https://travis-ci.org/InsightAppDev/TinkoffInvestNetSdk)
 [![nuget version](https://img.shields.io/nuget/v/Insight.Tinkoff.InvestSdk)](https://www.nuget.org/packages/Insight.Tinkoff.InvestSdk/)
+![Nuget](https://img.shields.io/nuget/dt/Insight.Tinkoff.InvestSDK?color=%2300000)
 
 About
 -------------------
