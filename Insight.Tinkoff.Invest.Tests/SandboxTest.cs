@@ -23,8 +23,12 @@ namespace Insight.Tinkoff.Invest.Tests
             var response = await _sandboxService.Register(CancellationToken.None);
             ValidateRestResponse(response);
         }
-
-        [Fact]
+        
+        /// <summary>
+        /// Uncomment fact to test. Should_post_limit_order will fail at "Run all tests" if [Fact] uncommented
+        /// </summary>
+        /// <returns></returns>
+        // [Fact]
         public async Task Should_clear_sandbox()
         {
             var response = await _sandboxService.Clear(CancellationToken.None);

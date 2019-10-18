@@ -5,7 +5,6 @@ using Insight.Tinkoff.Invest.Dto;
 using Insight.Tinkoff.Invest.Dto.Responses;
 using Insight.Tinkoff.Invest.Infrastructure;
 using Insight.Tinkoff.Invest.Infrastructure.Configurations;
-using Insight.Tinkoff.Invest.Infrastructure.Json;
 using Insight.Tinkoff.Invest.Infrastructure.Services;
 
 namespace Insight.Tinkoff.Invest.Services

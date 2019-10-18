@@ -1,7 +1,6 @@
 using System;
 using System.Reactive.Linq;
 using System.Threading.Tasks;
-using System.Transactions;
 using Insight.Tinkoff.Invest.Domain;
 using Insight.Tinkoff.Invest.Dto.Messages;
 using Insight.Tinkoff.Invest.Infrastructure.Configurations;
@@ -46,7 +45,6 @@ namespace Insight.Tinkoff.Invest.Tests
                             throw new ArgumentException(nameof(x));
                     }
                 }, ex => { throw ex; })
-                .RetryAfterDelay(TimeSpan.FromSeconds(1))
                 .Subscribe();
 
             await _streamService.Send(new SubscribeOrderBookMessage

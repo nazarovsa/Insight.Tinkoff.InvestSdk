@@ -5,6 +5,8 @@
         <IsPackable>false</IsPackable>
 
         <TargetFramework>netcoreapp2.2</TargetFramework>
+
+        <OutputType>Library</OutputType>
     </PropertyGroup>
 
     <ItemGroup>
