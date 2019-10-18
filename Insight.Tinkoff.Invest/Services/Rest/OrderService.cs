@@ -19,7 +19,7 @@ namespace Insight.Tinkoff.Invest.Services
 
         public Task<EmptyResponse> Cancel(string orderId, CancellationToken cancellationToken = default)
         {
-            return Post<EmptyResponse>($"{(Configuration.SandboxMode ? SandboxBasePath : BasePath)}/orders/cancel?orderId={orderId}", null,
+            return Post<object, EmptyResponse>($"{(Configuration.SandboxMode ? SandboxBasePath : BasePath)}/orders/cancel?orderId={orderId}", null,
                 cancellationToken);
         }
 
@@ -31,8 +31,7 @@ namespace Insight.Tinkoff.Invest.Services
         public Task<LimitOrderResponse> PostLimitOrder(string figi, LimitOrderRequest request,
             CancellationToken cancellationToken = default)
         {
-            var payload = JSerializer.Serialize(request);
-            return Post<LimitOrderResponse>($"{(Configuration.SandboxMode ? SandboxBasePath : BasePath)}/orders/limit-order?figi={figi}", payload,
+            return Post<LimitOrderRequest, LimitOrderResponse>($"{(Configuration.SandboxMode ? SandboxBasePath : BasePath)}/orders/limit-order?figi={figi}", request,
                 cancellationToken);
         }
     }

@@ -9,10 +9,10 @@ using Xunit;
 
 namespace Insight.Tinkoff.Invest.Tests
 {
-    public class OperationsTest : TestBase
+    public sealed class OperationsTest : TestBase
     {
         private readonly IOperationService _operationService;
-        
+
         public OperationsTest()
         {
             _operationService = new OperationService(RestConfiguration);

@@ -6,7 +6,6 @@ using System.Threading;
 using System.Threading.Tasks;
 using Insight.Tinkoff.Invest.Infrastructure.Exceptions;
 using Insight.Tinkoff.Invest.Infrastructure.Json;
-using MimeMapping;
 
 namespace Insight.Tinkoff.Invest.Infrastructure.Services
 {
@@ -24,38 +23,43 @@ namespace Insight.Tinkoff.Invest.Infrastructure.Services
             BaseUrl = baseUrl;
         }
 
-        protected async Task<T> Post<T>(string path, string payload, CancellationToken cancellationToken = default)
+        protected async Task<TO> Post<TI, TO>(string path, TI payload, CancellationToken cancellationToken = default)
         {
-            var content = new StringContent(payload ?? string.Empty, Encoding.UTF8, KnownMimeTypes.Json);
-            var url = GetRequestUrl(path);
+            var request = new HttpRequestMessage(HttpMethod.Post, GetRequestUrl(path));
+            if (payload != null)
+                request.Content = new StringContent(JSerializer.Serialize(payload), Encoding.UTF8, "application/json");
+
             var client = EnsureHttpClientCreated();
-            var response = await client.PostAsync(url, content, cancellationToken);
-            return await GetResponseItem<T>(path, response);
+            var response = await client.SendAsync(request, cancellationToken);
+            return await GetResponseItem<TO>(path, response);
         }
 
         protected async Task<T> Get<T>(string path, CancellationToken cancellationToken = default)
         {
-            var url = GetRequestUrl(path);
-            var client = EnsureHttpClientCreated();
-            var response = await client.GetAsync(url, cancellationToken);
+            var request = new HttpRequestMessage(HttpMethod.Get, GetRequestUrl(path));
+            var response = await EnsureHttpClientCreated()
+                .SendAsync(request, cancellationToken);
             return await GetResponseItem<T>(path, response);
         }
 
         protected async Task<T> Delete<T>(string path, CancellationToken cancellationToken = default)
         {
-            var url = GetRequestUrl(path);
-            var client = EnsureHttpClientCreated();
-            var response = await client.DeleteAsync(url, cancellationToken);
+            var request = new HttpRequestMessage(HttpMethod.Delete, GetRequestUrl(path));
+            var response = await EnsureHttpClientCreated()
+                .SendAsync(request, cancellationToken);
             return await GetResponseItem<T>(path, response);
         }
 
-        protected async Task<T> Put<T>(string path, string payload, CancellationToken cancellationToken = default)
+        protected async Task<TO> Put<TI, TO>(string path, TI payload, CancellationToken cancellationToken = default)
         {
-            var content = new StringContent(payload ?? string.Empty, Encoding.UTF8, KnownMimeTypes.Json);
-            var url = GetRequestUrl(path);
+            var request = new HttpRequestMessage(HttpMethod.Post, GetRequestUrl(path));
+            if (payload != null)
+                request.Content = new StringContent(JSerializer.Serialize(payload), Encoding.UTF8, "application/json");
+
             var client = EnsureHttpClientCreated();
-            var response = await client.PutAsync(url, content, cancellationToken);
-            return await GetResponseItem<T>(path, response);
+            var response = await client
+                .SendAsync(request, cancellationToken);
+            return await GetResponseItem<TO>(path, response);
         }
 
         protected virtual async Task<T> GetResponseItem<T>(string path, HttpResponseMessage response)
@@ -63,7 +67,7 @@ namespace Insight.Tinkoff.Invest.Infrastructure.Services
             var json = await GetResponseString(response);
             if (response.StatusCode != HttpStatusCode.OK)
                 throw new RestServiceException(GetRestServiceExceptionMessage(path, response.StatusCode));
-            
+
             return JSerializer.Deserialize<T>(json);
         }
 

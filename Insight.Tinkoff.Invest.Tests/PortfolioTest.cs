@@ -7,7 +7,7 @@ using Xunit;
 
 namespace Insight.Tinkoff.Invest.Tests
 {
-    public class PortfolioTest : TestBase
+    public sealed class PortfolioTest : TestBase
     {
         private readonly IPortfolioService _portfolioService;
         

@@ -11,10 +11,10 @@ namespace Insight.Tinkoff.Invest.Domain
 
         Task<EmptyResponse> Clear(CancellationToken cancellationToken = default);
 
-        Task<EmptyResponse> PostCurrenciesBalance(SandboxSetCurrencyBalanceRequest request,
+        Task<EmptyResponse> SetCurrenciesBalance(SandboxSetCurrencyBalanceRequest request,
             CancellationToken cancellationToken = default);
         
-        Task<EmptyResponse> PostPositionBalance(SandboxSetPositionBalanceRequest request,
+        Task<EmptyResponse> SetPositionBalance(SandboxSetPositionBalanceRequest request,
             CancellationToken cancellationToken = default);
     }
 }

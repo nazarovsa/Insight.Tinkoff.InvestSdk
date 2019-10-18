@@ -10,10 +10,10 @@ using Xunit;
 
 namespace Insight.Tinkoff.Invest.Tests
 {
-    public class MarketTest : TestBase
+    public sealed class MarketTest : TestBase
     {
         private readonly IMarketService _marketService;
-        private readonly string _accentureFigi = "BBG000D9D830";
+        private const string AccentureFigi = "BBG000D9D830";
 
         public MarketTest()
         {
@@ -60,7 +60,7 @@ namespace Insight.Tinkoff.Invest.Tests
         [Fact]
         public async Task Should_get_orderbook()
         {
-            var response = await _marketService.GetOrderBook(_accentureFigi, 5, CancellationToken.None);
+            var response = await _marketService.GetOrderBook(AccentureFigi, 5, CancellationToken.None);
             
             ValidateRestResponse(response);
             Assert.NotNull(response.OrderBook);
@@ -73,7 +73,7 @@ namespace Insight.Tinkoff.Invest.Tests
         [Fact]
         public async Task Should_get_candles()
         {
-            var response = await _marketService.GetCandles(_accentureFigi, DateTime.Now - TimeSpan.FromDays(1), DateTime.Now, CandleInterval.Hour, CancellationToken.None);
+            var response = await _marketService.GetCandles(AccentureFigi, DateTime.Now - TimeSpan.FromDays(1), DateTime.Now, CandleInterval.Hour, CancellationToken.None);
             
             ValidateRestResponse(response);
             Assert.False(string.IsNullOrWhiteSpace(response.Figi));

@@ -8,7 +8,7 @@ using Xunit;
 
 namespace Insight.Tinkoff.Invest.Tests
 {
-    public class OrderTest : TestBase
+    public sealed class OrderTest : TestBase
     {
         private readonly IOrderService _orderService;
         private readonly ISandboxService _sandboxService;
@@ -31,7 +31,7 @@ namespace Insight.Tinkoff.Invest.Tests
         [Fact]
         public async Task Should_post_limit_order()
         {
-            var balanceSetResponse = await _sandboxService.PostCurrenciesBalance(new SandboxSetCurrencyBalanceRequest
+            var balanceSetResponse = await _sandboxService.SetCurrenciesBalance(new SandboxSetCurrencyBalanceRequest
             {
                 Balance = 200,
                 Currency = Currency.Usd

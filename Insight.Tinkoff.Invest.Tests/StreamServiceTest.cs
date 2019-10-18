@@ -13,7 +13,7 @@ using Xunit.Abstractions;
 
 namespace Insight.Tinkoff.Invest.Tests
 {
-    public class StreamServiceTest : TestBase
+    public sealed class StreamServiceTest : TestBase
     {
         private readonly ITestOutputHelper _testOutputHelper;
         private IStreamMarketService _streamService;
@@ -39,7 +39,8 @@ namespace Insight.Tinkoff.Invest.Tests
                     switch (x)
                     {
                         case OrderBookMessage m:
-                            _testOutputHelper.WriteLine($"[{DateTime.Now:HH:mm:ss.fff}]: type: {m.Event}, figi: {m.Payload.Figi}");
+                            _testOutputHelper.WriteLine(
+                                $"[{DateTime.Now:HH:mm:ss.fff}]: type: {m.Event}, figi: {m.Payload.Figi}");
                             break;
                         default:
                             throw new ArgumentException(nameof(x));

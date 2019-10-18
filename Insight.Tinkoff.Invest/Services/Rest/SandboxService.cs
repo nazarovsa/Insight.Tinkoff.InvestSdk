@@ -19,31 +19,29 @@ namespace Insight.Tinkoff.Invest.Services
 
         public async Task<EmptyResponse> Register(CancellationToken cancellationToken = default)
         {
-            return await Post<EmptyResponse>($"{(Configuration.SandboxMode ? SandboxBasePath : BasePath)}/sandbox/register",
+            return await Post<object, EmptyResponse>($"{(Configuration.SandboxMode ? SandboxBasePath : BasePath)}/sandbox/register",
                 null, cancellationToken);
         }
 
         public async Task<EmptyResponse> Clear(CancellationToken cancellationToken = default)
         {
-            return await Post<EmptyResponse>($"{(Configuration.SandboxMode ? SandboxBasePath : BasePath)}/sandbox/clear", null,
+            return await Post<object, EmptyResponse>($"{(Configuration.SandboxMode ? SandboxBasePath : BasePath)}/sandbox/clear", null,
                 cancellationToken);
         }
 
-        public async Task<EmptyResponse> PostCurrenciesBalance(SandboxSetCurrencyBalanceRequest request,
+        public async Task<EmptyResponse> SetCurrenciesBalance(SandboxSetCurrencyBalanceRequest request,
             CancellationToken cancellationToken = default)
         {
-            var payload = JSerializer.Serialize(request);
-            return await Post<EmptyResponse>(
-                $"{(Configuration.SandboxMode ? SandboxBasePath : BasePath)}/sandbox/currencies/balance", payload,
+            return await Post<SandboxSetCurrencyBalanceRequest, EmptyResponse>(
+                $"{(Configuration.SandboxMode ? SandboxBasePath : BasePath)}/sandbox/currencies/balance", request,
                 cancellationToken);
         }
 
-        public async Task<EmptyResponse> PostPositionBalance(SandboxSetPositionBalanceRequest request,
+        public async Task<EmptyResponse> SetPositionBalance(SandboxSetPositionBalanceRequest request,
             CancellationToken cancellationToken = default)
         {
-            var payload = JSerializer.Serialize(request);
-            return await Post<EmptyResponse>(
-                $"{(Configuration.SandboxMode ? SandboxBasePath : BasePath)}/sandbox/positions/balance", payload,
+            return await Post<SandboxSetPositionBalanceRequest, EmptyResponse>(
+                $"{(Configuration.SandboxMode ? SandboxBasePath : BasePath)}/sandbox/positions/balance", request,
                 cancellationToken);
         }
     }
