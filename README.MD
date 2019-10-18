@@ -31,7 +31,7 @@ StreamMarketService инициализируется объектом конфи
 
 StreamMarketService
 --------------------
-Данный сервис реализует интерфейс IStreamMarketService:
+Механизм взаимодействия с WebSocket взят из [официального sdk](https://github.com/TinkoffCreditSystems/invest-openapi-csharp-sdk). StreamMarketService реализует интерфейс IStreamMarketService:
 ```
 public interface IStreamMarketService
 {
@@ -71,7 +71,6 @@ public sealed class Program {
               break;
           }
         }, ex => { throw ex; })
-        .RetryAfterDelay(TimeSpan.FromSeconds(1))
         .Subscribe();
     
       await client.Send(new SubscribeCandleMessage
@@ -88,13 +87,11 @@ public sealed class Program {
         Interval = CandleInterval.Minute
       });
       
-      subscription?.Dispose()
+      subscription?.Dispose();
     }
   }
 }
 ```
-
-**RetryAfterDelay** - лечит разрыв соединения.
 
 Тесты
 ---------------
