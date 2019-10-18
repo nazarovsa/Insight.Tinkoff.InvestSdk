@@ -44,7 +44,7 @@ namespace Insight.Tinkoff.Invest.Tests
                 Balance = 100000
             };
 
-            var response = await _sandboxService.SetCurrenciesBalance(request, CancellationToken.None);
+            var response = await _sandboxService.SetCurrencyBalance(request, CancellationToken.None);
             ValidateRestResponse(response);
         }
 

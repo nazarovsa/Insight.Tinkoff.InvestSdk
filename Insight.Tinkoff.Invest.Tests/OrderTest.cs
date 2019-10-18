@@ -31,7 +31,7 @@ namespace Insight.Tinkoff.Invest.Tests
         [Fact]
         public async Task Should_post_limit_order()
         {
-            var balanceSetResponse = await _sandboxService.SetCurrenciesBalance(new SandboxSetCurrencyBalanceRequest
+            var balanceSetResponse = await _sandboxService.SetCurrencyBalance(new SandboxSetCurrencyBalanceRequest
             {
                 Balance = 200,
                 Currency = Currency.Usd

@@ -28,7 +28,7 @@ namespace Insight.Tinkoff.Invest.Services
                 cancellationToken);
         }
 
-        public async Task<EmptyResponse> SetCurrenciesBalance(SandboxSetCurrencyBalanceRequest request,
+        public async Task<EmptyResponse> SetCurrencyBalance(SandboxSetCurrencyBalanceRequest request,
             CancellationToken cancellationToken = default)
         {
             return await Post<SandboxSetCurrencyBalanceRequest, EmptyResponse>(
