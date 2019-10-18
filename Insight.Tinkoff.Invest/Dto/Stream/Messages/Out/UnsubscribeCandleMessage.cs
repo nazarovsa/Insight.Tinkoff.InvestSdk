@@ -4,7 +4,7 @@ namespace Insight.Tinkoff.Invest.Dto.Messages
 {
     public sealed class UnsubscribeCandleMessage : IWsMessage
     {
-        public string Event => "candle:unsubscribe";
+        public string Event => EventType.UnubscribeCandle;
         
         public string Figi { get; set; }
         

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Net;
 using System.Net.Http;
+using System.Net.Http.Headers;
 using System.Threading.Tasks;
 using Insight.Tinkoff.Invest.Infrastructure.Configurations;
 using Insight.Tinkoff.Invest.Infrastructure.Exceptions;
@@ -43,7 +44,7 @@ namespace Insight.Tinkoff.Invest.Infrastructure.Services
         protected override HttpClient CreateClient()
         { 
             var client = new HttpClient { BaseAddress = new Uri(BaseUrl) };
-            client.DefaultRequestHeaders.Add("Authorization", $"Bearer {Configuration.AccessToken}");
+            client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer",  Configuration.AccessToken);
             return client;
         }
     }

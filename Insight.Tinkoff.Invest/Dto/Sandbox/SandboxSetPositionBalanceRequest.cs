@@ -1,5 +1,3 @@
-using System.Runtime.Serialization;
-
 namespace Insight.Tinkoff.Invest.Dto
 {
     public sealed class SandboxSetPositionBalanceRequest

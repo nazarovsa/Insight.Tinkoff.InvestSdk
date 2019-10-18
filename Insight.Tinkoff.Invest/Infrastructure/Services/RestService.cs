@@ -7,7 +7,6 @@ using System.Threading.Tasks;
 using Insight.Tinkoff.Invest.Infrastructure.Exceptions;
 using Insight.Tinkoff.Invest.Infrastructure.Json;
 using MimeMapping;
-using Newtonsoft.Json;
 
 namespace Insight.Tinkoff.Invest.Infrastructure.Services
 {
