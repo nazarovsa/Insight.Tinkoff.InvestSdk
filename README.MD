@@ -29,7 +29,7 @@ Get started
 
 StreamMarketService инициализируется объектом конфигурации типа **StreamMarketServiceConfiguration**:
 * *string Token* - Токен доступа к API
-* *string Address* - Адрес, по которому доступен WebSocket
+* *string Address* - Адрес, по которому доступен WebSocket, default = "wss://api-invest.tinkoff.ru/openapi/md/v1/md-openapi/ws"
 
 StreamMarketService
 --------------------
