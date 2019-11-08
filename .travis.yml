@@ -1,6 +1,6 @@
 language: csharp
 mono: none
-dotnet: 2.2.300
+dotnet: 3.0.100
 script:
  - dotnet restore
  - dotnet build
