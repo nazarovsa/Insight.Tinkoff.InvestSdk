@@ -1,7 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
     <PropertyGroup>
-        <LangVersion>7.3</LangVersion>
+        <LangVersion>8</LangVersion>
         <Title>Tinkoff Invest OpenApi Sdk</Title>
         <Authors>Sergey Nazarov</Authors>
         <Copyright>Copyright © 2019 Sergey Nazarov</Copyright>
@@ -10,7 +10,8 @@
         <RepositoryType>Github</RepositoryType>
         <PackageVersion>1.1.0</PackageVersion>
         <PackageId>Insight.Tinkoff.InvestSdk</PackageId>
-        <TargetFramework>netstandard2.0</TargetFramework>
+        <TargetFrameworks>netstandard2.0;netcoreapp3.0</TargetFrameworks>
+        <Nullable>disable</Nullable>
     </PropertyGroup>
 
     <ItemGroup>
