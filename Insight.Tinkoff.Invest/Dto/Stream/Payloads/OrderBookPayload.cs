@@ -31,12 +31,12 @@ namespace Insight.Tinkoff.Invest.Dto.Payloads
         public int Depth { get; set; }
 
         /// <summary>
-        /// Массив [Цена, Количество] предложений цены
+        /// Массив предложений цены
         /// </summary>
         public IReadOnlyCollection<LotOffer> Bids { get; set; }
 
         /// <summary>
-        /// Массив [Цена, Количество] запросов цены
+        /// Массив запросов цены
         /// </summary>
         public IReadOnlyCollection<LotOffer> Asks { get; set; }
     }

@@ -10,7 +10,7 @@ namespace Insight.Tinkoff.Invest.Dto.Payloads
         /// Статус торгов
         /// </summary>
         [JsonProperty("trade_status")]
-        public string TradeStatus { get; set; }
+        public TradeStatus TradeStatus { get; set; }
         
         /// <summary>
         /// Шаг цены
