@@ -95,6 +95,10 @@ public sealed class Program {
 }
 ```
 
+Сериализация библиотечных объектов
+---------------
+Так как многие свойства классов содержат атрибут [JsonPropertyAttribute](https://www.newtonsoft.com/json/help/html/T_Newtonsoft_Json_JsonPropertyAttribute.htm) для десериализации json'a, получаемого от Tinkoff Api, желательно избегать сериализации объектов возвращаемых из данного SDK, так как на выходе имена в json'e будут отличаться от ожидаемых. Если все же имется потребность в сериализации, то можно использовать кастомные настройки для JsonConvert.
+
 Тесты
 ---------------
 Вы можете запустить примитивные тесты для Rest сервисов добавив в файл [Insight.Tinkoff.Invest.Tests/appsettings.json](https://github.com/InsightAppDev/TinkoffInvestNetSdk/blob/master/Insight.Tinkoff.Invest.Tests/appsettings.json) токен для сандбокса. По дефолту изменения файла игнорируются в .gitignore

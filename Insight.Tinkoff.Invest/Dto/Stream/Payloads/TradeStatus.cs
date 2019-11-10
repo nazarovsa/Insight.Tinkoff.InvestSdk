@@ -9,7 +9,7 @@ namespace Insight.Tinkoff.Invest.Dto.Payloads
     {
         [EnumMember(Value = "normal_trading")]
         NormalTrading,
-        
+
         [EnumMember(Value = "not_available_for_trading")]
         NotAvailableForTrading
     }
