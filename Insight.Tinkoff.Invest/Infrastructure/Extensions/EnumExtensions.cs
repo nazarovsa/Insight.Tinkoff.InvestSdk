@@ -5,7 +5,7 @@ using System.Runtime.Serialization;
 
 namespace Insight.Tinkoff.Invest.Infrastructure.Extensions
 {
-    public static class EnumExtensions
+    internal static class EnumExtensions
     {
         public static string GetEnumMemberAttributeValue<T>(this T e) where T : IConvertible
         {

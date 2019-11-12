@@ -2,7 +2,7 @@ Unofficial Tinkoff Invest .Net Sdk
 ====================
 [![Build Status](https://travis-ci.org/InsightAppDev/Insight.Tinkoff.InvestSdk.svg?branch=master)](https://travis-ci.org/InsightAppDev/Insight.Tinkoff.InvestSdk)
 [![nuget version](https://img.shields.io/nuget/v/Insight.Tinkoff.InvestSdk)](https://www.nuget.org/packages/Insight.Tinkoff.InvestSdk/)
-![Nuget](https://img.shields.io/nuget/dt/Insight.Tinkoff.InvestSDK?color=%2300000)
+[![Nuget](https://img.shields.io/nuget/dt/Insight.Tinkoff.InvestSDK?color=%2300000)](https://www.nuget.org/packages/Insight.Tinkoff.InvestSdk/)
 
 About
 -------------------
@@ -22,18 +22,18 @@ Get started
 * *SandboxService* - Взаимодействие с песочницей (Rest, реализует **[ISandboxService](https://github.com/InsightAppDev/TinkoffInvestNetSdk/blob/master/Insight.Tinkoff.Invest/Domain/Services/ISandboxService.cs)**)
 * *StreamMarketService* - Взаимодействие с API по протоколу WebSocket (WebSocket, Реализует **[IStreamMarketService](https://github.com/InsightAppDev/TinkoffInvestNetSdk/blob/master/Insight.Tinkoff.Invest/Domain/Services/IStreamMarketService.cs)**)
 
-Все Rest сервисы инициализируются объектом конфигурации типа **TinkoffRestServiceConfiguration**:
+Все Rest сервисы инициализируются объектом конфигурации типа **RestConfiguration**:
 * *string AccessToken* - Токен доступа к API
 * *string BaseUrl* - Базовый адрес API, default = "https://api-invest.tinkoff.ru"
 * *bool SandboxMode* - Признак активна ли песочница, default = true
 
-StreamMarketService инициализируется объектом конфигурации типа **StreamMarketServiceConfiguration**:
-* *string Token* - Токен доступа к API
+StreamMarketService инициализируется объектом конфигурации типа **StreamConfiguration**:
+* *string AccessToken* - Токен доступа к API
 * *string Address* - Адрес, по которому доступен WebSocket, default = "wss://api-invest.tinkoff.ru/openapi/md/v1/md-openapi/ws"
 
 StreamMarketService
 --------------------
-Механизм взаимодействия с WebSocket взят из [официального sdk](https://github.com/TinkoffCreditSystems/invest-openapi-csharp-sdk). StreamMarketService реализует интерфейс IStreamMarketService:
+Механизм взаимодействия взят из [официального sdk](https://github.com/TinkoffCreditSystems/invest-openapi-csharp-sdk). StreamMarketService реализует интерфейс IStreamMarketService:
 ```
 public interface IStreamMarketService
 {

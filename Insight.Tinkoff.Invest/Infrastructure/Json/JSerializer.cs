@@ -4,7 +4,7 @@ using Newtonsoft.Json.Serialization;
 
 namespace Insight.Tinkoff.Invest.Infrastructure.Json
 {
-    public static class JSerializer
+    internal static class JSerializer
     {
         private static readonly JsonSerializerSettings _settings;
 

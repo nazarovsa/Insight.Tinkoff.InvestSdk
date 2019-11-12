@@ -12,7 +12,7 @@ namespace Insight.Tinkoff.Invest.Tests.Base
         public TestBase()
         {
             Token = TestConfigurationManager.GetToken();
-            RestConfiguration = new TinkoffRestServiceConfiguration
+            RestConfiguration = new RestConfiguration
             {
                 AccessToken = Token
             };
@@ -20,7 +20,7 @@ namespace Insight.Tinkoff.Invest.Tests.Base
 
         protected string Token { get; }
 
-        protected TinkoffRestServiceConfiguration RestConfiguration { get; }
+        protected RestConfiguration RestConfiguration { get; }
 
         protected void ValidateRestResponse(ResponseBase response)
         {
@@ -35,7 +35,7 @@ namespace Insight.Tinkoff.Invest.Tests.Base
 
             public static string GetToken()
             {
-                return _config.Value["Token"]?.ToString();
+                return _config.Value["AccessToken"]?.ToString();
             }
         }
     }

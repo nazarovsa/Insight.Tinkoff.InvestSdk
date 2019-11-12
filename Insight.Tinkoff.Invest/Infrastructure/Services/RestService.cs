@@ -9,7 +9,7 @@ using Insight.Tinkoff.Invest.Infrastructure.Json;
 
 namespace Insight.Tinkoff.Invest.Infrastructure.Services
 {
-    public abstract class RestService
+    internal abstract class RestService
     {
         private HttpClient _client;
 
@@ -23,7 +23,7 @@ namespace Insight.Tinkoff.Invest.Infrastructure.Services
             BaseUrl = baseUrl;
         }
 
-        protected async Task<TO> Post<TI, TO>(string path, TI payload, CancellationToken cancellationToken = default)
+        internal virtual async Task<TO> Post<TI, TO>(string path, TI payload, CancellationToken cancellationToken = default)
         {
             var request = new HttpRequestMessage(HttpMethod.Post, GetRequestUrl(path));
             if (payload != null)
@@ -34,7 +34,7 @@ namespace Insight.Tinkoff.Invest.Infrastructure.Services
             return await GetResponseItem<TO>(path, response);
         }
 
-        protected async Task<T> Get<T>(string path, CancellationToken cancellationToken = default)
+        internal virtual async Task<T> Get<T>(string path, CancellationToken cancellationToken = default)
         {
             var request = new HttpRequestMessage(HttpMethod.Get, GetRequestUrl(path));
             var response = await EnsureHttpClientCreated()
@@ -42,7 +42,7 @@ namespace Insight.Tinkoff.Invest.Infrastructure.Services
             return await GetResponseItem<T>(path, response);
         }
 
-        protected async Task<T> Delete<T>(string path, CancellationToken cancellationToken = default)
+        internal virtual async Task<T> Delete<T>(string path, CancellationToken cancellationToken = default)
         {
             var request = new HttpRequestMessage(HttpMethod.Delete, GetRequestUrl(path));
             var response = await EnsureHttpClientCreated()
@@ -50,7 +50,7 @@ namespace Insight.Tinkoff.Invest.Infrastructure.Services
             return await GetResponseItem<T>(path, response);
         }
 
-        protected async Task<TO> Put<TI, TO>(string path, TI payload, CancellationToken cancellationToken = default)
+        internal virtual async Task<TO> Put<TI, TO>(string path, TI payload, CancellationToken cancellationToken = default)
         {
             var request = new HttpRequestMessage(HttpMethod.Post, GetRequestUrl(path));
             if (payload != null)
@@ -71,7 +71,7 @@ namespace Insight.Tinkoff.Invest.Infrastructure.Services
             return JSerializer.Deserialize<T>(json);
         }
 
-        protected Uri GetRequestUrl(string path)
+        private Uri GetRequestUrl(string path)
         {
             return new UriBuilder($"{BaseUrl}{path}").Uri;
         }

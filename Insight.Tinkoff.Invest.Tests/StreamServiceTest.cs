@@ -20,9 +20,9 @@ namespace Insight.Tinkoff.Invest.Tests
         public StreamServiceTest(ITestOutputHelper testOutputHelper)
         {
             _testOutputHelper = testOutputHelper;
-            _streamService = new StreamMarketService(new StreamMarketServiceConfiguration
+            _streamService = new StreamMarketService(new StreamConfiguration
             {
-                Token = Token
+                AccessToken = Token
             });
         }
 

@@ -16,14 +16,14 @@ namespace Insight.Tinkoff.Invest.Services
     public class StreamMarketService : IStreamMarketService
     {
         private ClientWebSocket _socket;
-        private readonly StreamMarketServiceConfiguration _configuration;
+        private readonly StreamConfiguration _configuration;
 
         private event MessageReceived OnMessageReceived;
 
         private bool Disposed { get; set; }
 
 
-        public StreamMarketService(StreamMarketServiceConfiguration configuration)
+        public StreamMarketService(StreamConfiguration configuration)
         {
             if (configuration == null)
                 throw new ArgumentNullException(nameof(configuration));
@@ -73,7 +73,7 @@ namespace Insight.Tinkoff.Invest.Services
             if (Interlocked.CompareExchange(ref _socket, new ClientWebSocket(), null) != null)
                 return;
 
-            _socket.Options.SetRequestHeader("Authorization", $"Bearer {_configuration.Token}");
+            _socket.Options.SetRequestHeader("Authorization", $"Bearer {_configuration.AccessToken}");
             await _socket.ConnectAsync(new Uri(_configuration.Address), CancellationToken.None);
 
             await Receiving();
