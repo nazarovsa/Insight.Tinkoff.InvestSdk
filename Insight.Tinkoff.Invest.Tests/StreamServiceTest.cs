@@ -47,11 +47,7 @@ namespace Insight.Tinkoff.Invest.Tests
                 }, ex => { throw ex; })
                 .Subscribe();
 
-            await _streamService.Send(new SubscribeOrderBookMessage
-            {
-                Figi = "BBG000D9D830",
-                Depth = 5
-            });
+            await _streamService.Send(new SubscribeOrderBookMessage("BBG000D9D830", 5));
 
             await Task.Delay(5 * 1000);
         }

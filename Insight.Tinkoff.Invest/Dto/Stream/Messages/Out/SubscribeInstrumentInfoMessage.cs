@@ -8,7 +8,14 @@ namespace Insight.Tinkoff.Invest.Dto.Messages
 
         public string Figi { get; set; }
 
-
+        public SubscribeInstrumentInfoMessage(string figi)
+        {
+            if (string.IsNullOrWhiteSpace(figi))
+                throw new ArgumentNullException(nameof(figi));
+            
+            Figi = figi;
+        }
+        
         public override int GetHashCode()
         {
             return (Figi != null ? Figi.GetHashCode() : 0);
