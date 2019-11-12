@@ -47,9 +47,9 @@ public interface IStreamMarketService
 Метод AsObservable() реализован с помощью [System.Reactive](https://www.nuget.org/packages/System.Reactive/), а именно с помощью *Observable.FromEventPattern*, благодаря этому вы получаете Push коллекцию, в которую будут приходить сообщения типа *WsMessage*: *CandleMessage*, *OrderBookMessage*, *InstrumentInfoMessage*. На выходе сообщения десериализуются в правильный тип на основе свойства Event, вы можете использовать Pattern Matching. Пример кода:
 ```
 public sealed class Program {
-  private StreamMarketServiceConfiguration _config;
+  private StreamConfiguration _config;
   
-  public Program(StreamMarketServiceConfiguration config) {
+  public Program(StreamConfiguration config) {
     if(config == null)
       throw new ArgumentNullException(nameof(config));
       
