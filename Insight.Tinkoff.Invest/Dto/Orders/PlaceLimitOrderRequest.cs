@@ -1,6 +1,6 @@
 namespace Insight.Tinkoff.Invest.Dto
 {
-    public sealed class LimitOrderRequest
+    public sealed class PlaceLimitOrderRequest
     {
         public int Lots { get; set; }
 

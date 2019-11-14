@@ -5,8 +5,9 @@ namespace Insight.Tinkoff.Invest.Dto.Responses
 {
     public sealed class LimitOrderResponse : ResponseBase
     {
+        [JsonProperty] 
         public PlacedLimitOrder Order { get; }
-        
+
         [JsonConstructor]
         public LimitOrderResponse([JsonProperty("payload")] PlacedLimitOrder limitOrder)
         {

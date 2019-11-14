@@ -4,9 +4,18 @@ namespace Insight.Tinkoff.Invest.Dto.Payloads
 {
     public sealed class ErrorMessagePayload
     {
-        [JsonProperty("request_id")]
-        public string RequestId { get; set; }
-        
-        public string Error { get; set; }
+        [JsonConstructor]
+        public ErrorMessagePayload(
+            [JsonProperty("request_id")] string requestId,
+            string error)
+        {
+            RequestId = requestId;
+            Error = error;
+        }
+
+        [JsonProperty] 
+        public string RequestId { get; private set; }
+
+        public string Error { get; private set; }
     }
 }

@@ -12,6 +12,6 @@ namespace Insight.Tinkoff.Invest.Domain
         
         Task<OrdersResponse> Get(CancellationToken cancellationToken = default);
 
-        Task<LimitOrderResponse> PostLimitOrder(string figi, LimitOrderRequest request, CancellationToken cancellationToken = default);
+        Task<LimitOrderResponse> PlaceLimitOrder(string figi, PlaceLimitOrderRequest request, CancellationToken cancellationToken = default);
     }
 }

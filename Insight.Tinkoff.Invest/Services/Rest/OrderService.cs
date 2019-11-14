@@ -33,10 +33,10 @@ namespace Insight.Tinkoff.Invest.Services
             return _rest.Get<OrdersResponse>("orders", cancellationToken);
         }
 
-        public Task<LimitOrderResponse> PostLimitOrder(string figi, LimitOrderRequest request,
+        public Task<LimitOrderResponse> PlaceLimitOrder(string figi, PlaceLimitOrderRequest request,
             CancellationToken cancellationToken = default)
         {
-            return _rest.Post<LimitOrderRequest, LimitOrderResponse>($"orders/limit-order?figi={figi}", request,
+            return _rest.Post<PlaceLimitOrderRequest, LimitOrderResponse>($"orders/limit-order?figi={figi}", request,
                 cancellationToken);
         }
     }

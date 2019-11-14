@@ -8,15 +8,8 @@ namespace Insight.Tinkoff.Invest.Dto
 
         public string Figi { get; set; }
 
-        /// <summary>
-        /// operation type
-        /// </summary>
-        [JsonProperty("operation")]
-        public OperationType OperationType { get; set; }
+        public OperationType Operation { get; set; }
 
-        /// <summary>
-        /// OrderStatus
-        /// </summary>
         public OrderStatus Status { get; set; }
 
         public int RequestedLots { get; set; }

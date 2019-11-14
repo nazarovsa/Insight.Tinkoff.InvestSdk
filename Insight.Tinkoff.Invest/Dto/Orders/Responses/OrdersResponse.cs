@@ -6,6 +6,7 @@ namespace Insight.Tinkoff.Invest.Dto.Responses
 {
     public sealed class OrdersResponse : ResponseBase
     {
+        [JsonProperty]
         public IReadOnlyCollection<Order> Orders { get; }
 
         [JsonConstructor]

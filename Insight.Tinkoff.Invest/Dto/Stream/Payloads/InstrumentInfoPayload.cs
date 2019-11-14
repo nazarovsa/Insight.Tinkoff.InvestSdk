@@ -4,41 +4,63 @@ namespace Insight.Tinkoff.Invest.Dto.Payloads
 {
     public sealed class InstrumentInfoPayload
     {
-        public string Figi { get; set; }
-        
+        [JsonConstructor]
+        public InstrumentInfoPayload(
+            string figi,
+            [JsonProperty("trade_status")] TradeStatus tradeStatus,
+            [JsonProperty("min_price_increment")] decimal minPriceIncrement,
+            decimal lot,
+            [JsonProperty("accrued_interest")] decimal? accruedInterest,
+            [JsonProperty("limit_up")] decimal? limitUp,
+            [JsonProperty("limit_down")] decimal? limitDown)
+        {
+            Figi = figi;
+            TradeStatus = tradeStatus;
+            MinPriceIncrement = minPriceIncrement;
+            Lot = lot;
+            AccruedInterest = accruedInterest;
+            LimitUp = limitUp;
+            LimitDown = limitDown;
+        }
+
+        /// <summary>
+        /// Figi
+        /// </summary>
+        public string Figi { get; private set; }
+
         /// <summary>
         /// Статус торгов
         /// </summary>
-        [JsonProperty("trade_status")]
-        public TradeStatus TradeStatus { get; set; }
-        
+        [JsonProperty]
+        public TradeStatus TradeStatus { get; private set; }
+
         /// <summary>
         /// Шаг цены
         /// </summary>
-        [JsonProperty("min_price_increment")]
-        public decimal MinPriceIncrement { get; set; }
-        
+        [JsonProperty]
+        public decimal MinPriceIncrement { get; private set; }
+
         /// <summary>
         /// Лот
         /// </summary>
-        public decimal Lot { get; set; }
-        
+        public decimal Lot { get; private set; }
+
         /// <summary>
         /// НКД. Возвращается только для бондов
         /// </summary>
-        [JsonProperty("accrued_interest")]
-        public decimal? AccruedInterest { get; set; }
-        
+        [JsonProperty]
+        public decimal? AccruedInterest { get; private set; }
+
         /// <summary>
         /// Верхняя граница заявки. Возвращается только для RTS инструментов
         /// </summary>
-        [JsonProperty("limit_up")]
-        public decimal? LimitUp { get; set; }
-        
+        [JsonProperty]
+        public decimal? LimitUp { get; private set; }
+
         /// <summary>
         /// Нижняя граница заявки. Возвращается только для RTS инструментов
         /// </summary>
-        [JsonProperty("limit_down")]
-        public decimal? LimitDown { get; set; }
+        [JsonProperty]
+        public decimal? LimitDown { get; private set; }
     }
 }

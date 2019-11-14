@@ -29,7 +29,7 @@ namespace Insight.Tinkoff.Invest.Tests
         }
 
         [Fact]
-        public async Task Should_post_limit_order()
+        public async Task Should_place_limit_order()
         {
             var balanceSetResponse = await _sandboxService.SetCurrencyBalance(new SandboxSetCurrencyBalanceRequest
             {
@@ -39,14 +39,14 @@ namespace Insight.Tinkoff.Invest.Tests
             
             ValidateRestResponse(balanceSetResponse);
             
-            var request = new LimitOrderRequest
+            var request = new PlaceLimitOrderRequest
             {
                 Lots = 1,
                 Operation = OperationType.Buy,
                 Price = 180
             };
             
-            var response = await _orderService.PostLimitOrder("BBG000D9D830", request, CancellationToken.None);
+            var response = await _orderService.PlaceLimitOrder("BBG000D9D830", request, CancellationToken.None);
 
             ValidateRestResponse(response);
             Assert.NotNull(response.Order);
