@@ -1,6 +1,6 @@
 ﻿namespace Insight.Tinkoff.Invest.Infrastructure.Configurations
 {
-    public sealed class TinkoffRestServiceConfiguration
+    public sealed class RestConfiguration
     {
         public string AccessToken { get; set; }
 

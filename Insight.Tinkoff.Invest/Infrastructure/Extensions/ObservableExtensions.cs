@@ -4,7 +4,7 @@ using System.Reactive.Linq;
 
 namespace Insight.Tinkoff.Invest.Infrastructure.Extensions
 {
-    public static class ObservableEx
+    public static class ObservableExtensions
     {
         private static IEnumerable<IObservable<TSource>> RepeatInfinite<TSource>(IObservable<TSource> source,
             TimeSpan dueTime)

@@ -7,10 +7,11 @@ namespace Insight.Tinkoff.Invest.Dto.Responses
 {
     public sealed class CurrenciesResponse : ResponseBase
     {
+        [JsonProperty]
         public IReadOnlyCollection<CurrencyPosition> Currencies { get; }
 
         [JsonConstructor]
-        public CurrenciesResponse([JsonProperty("payload")] CurrenciesResponsePayload payload)
+        public CurrenciesResponse(CurrenciesResponsePayload payload)
         {
             Currencies = payload.Currencies;
         }

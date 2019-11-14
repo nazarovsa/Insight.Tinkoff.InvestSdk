@@ -7,10 +7,11 @@ namespace Insight.Tinkoff.Invest.Dto.Responses
 {
     public sealed class PortfolioResponse : ResponseBase
     {
+        [JsonProperty]
         public IReadOnlyCollection<PortfolioPosition> Positions { get; }
 
         [JsonConstructor]
-        public PortfolioResponse([JsonProperty("payload")] PortfolioResponsePayload payload)
+        public PortfolioResponse(PortfolioResponsePayload payload)
         {
             Positions = payload.Positions;
         }

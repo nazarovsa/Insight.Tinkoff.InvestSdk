@@ -2,7 +2,7 @@ Unofficial Tinkoff Invest .Net Sdk
 ====================
 [![Build Status](https://travis-ci.org/InsightAppDev/Insight.Tinkoff.InvestSdk.svg?branch=master)](https://travis-ci.org/InsightAppDev/Insight.Tinkoff.InvestSdk)
 [![nuget version](https://img.shields.io/nuget/v/Insight.Tinkoff.InvestSdk)](https://www.nuget.org/packages/Insight.Tinkoff.InvestSdk/)
-![Nuget](https://img.shields.io/nuget/dt/Insight.Tinkoff.InvestSDK?color=%2300000)
+[![Nuget](https://img.shields.io/nuget/dt/Insight.Tinkoff.InvestSDK?color=%2300000)](https://www.nuget.org/packages/Insight.Tinkoff.InvestSdk/)
 
 About
 -------------------
@@ -22,18 +22,18 @@ Get started
 * *SandboxService* - Взаимодействие с песочницей (Rest, реализует **[ISandboxService](https://github.com/InsightAppDev/TinkoffInvestNetSdk/blob/master/Insight.Tinkoff.Invest/Domain/Services/ISandboxService.cs)**)
 * *StreamMarketService* - Взаимодействие с API по протоколу WebSocket (WebSocket, Реализует **[IStreamMarketService](https://github.com/InsightAppDev/TinkoffInvestNetSdk/blob/master/Insight.Tinkoff.Invest/Domain/Services/IStreamMarketService.cs)**)
 
-Все Rest сервисы инициализируются объектом конфигурации типа **TinkoffRestServiceConfiguration**:
+Все Rest сервисы инициализируются объектом конфигурации типа **RestConfiguration**:
 * *string AccessToken* - Токен доступа к API
 * *string BaseUrl* - Базовый адрес API, default = "https://api-invest.tinkoff.ru"
 * *bool SandboxMode* - Признак активна ли песочница, default = true
 
-StreamMarketService инициализируется объектом конфигурации типа **StreamMarketServiceConfiguration**:
-* *string Token* - Токен доступа к API
+StreamMarketService инициализируется объектом конфигурации типа **StreamConfiguration**:
+* *string AccessToken* - Токен доступа к API
 * *string Address* - Адрес, по которому доступен WebSocket, default = "wss://api-invest.tinkoff.ru/openapi/md/v1/md-openapi/ws"
 
 StreamMarketService
 --------------------
-Механизм взаимодействия с WebSocket взят из [официального sdk](https://github.com/TinkoffCreditSystems/invest-openapi-csharp-sdk). StreamMarketService реализует интерфейс IStreamMarketService:
+Механизм взаимодействия взят из [официального sdk](https://github.com/TinkoffCreditSystems/invest-openapi-csharp-sdk). StreamMarketService реализует интерфейс IStreamMarketService:
 ```
 public interface IStreamMarketService
 {
@@ -47,9 +47,9 @@ public interface IStreamMarketService
 Метод AsObservable() реализован с помощью [System.Reactive](https://www.nuget.org/packages/System.Reactive/), а именно с помощью *Observable.FromEventPattern*, благодаря этому вы получаете Push коллекцию, в которую будут приходить сообщения типа *WsMessage*: *CandleMessage*, *OrderBookMessage*, *InstrumentInfoMessage*. На выходе сообщения десериализуются в правильный тип на основе свойства Event, вы можете использовать Pattern Matching. Пример кода:
 ```
 public sealed class Program {
-  private StreamMarketServiceConfiguration _config;
+  private StreamConfiguration _config;
   
-  public Program(StreamMarketServiceConfiguration config) {
+  public Program(StreamConfiguration config) {
     if(config == null)
       throw new ArgumentNullException(nameof(config));
       

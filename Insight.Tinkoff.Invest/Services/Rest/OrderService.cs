@@ -1,4 +1,5 @@
-﻿using System.Threading;
+﻿using System;
+using System.Threading;
 using System.Threading.Tasks;
 using Insight.Tinkoff.Invest.Domain;
 using Insight.Tinkoff.Invest.Dto;
@@ -9,28 +10,33 @@ using Insight.Tinkoff.Invest.Infrastructure.Services;
 
 namespace Insight.Tinkoff.Invest.Services
 {
-    public sealed class OrderService : TinkoffRestService, IOrderService
+    public sealed class OrderService : IOrderService
     {
-        public OrderService(TinkoffRestServiceConfiguration configuration) : base(
-            configuration)
+        private readonly TinkoffRestService _rest;
+
+        public OrderService(RestConfiguration configuration)
         {
+            if (configuration == null)
+                throw new ArgumentNullException(nameof(configuration));
+
+            _rest = new TinkoffRestService(configuration);
         }
 
         public Task<EmptyResponse> Cancel(string orderId, CancellationToken cancellationToken = default)
         {
-            return Post<object, EmptyResponse>($"{(Configuration.SandboxMode ? SandboxBasePath : BasePath)}/orders/cancel?orderId={orderId}", null,
+            return _rest.Post<object, EmptyResponse>($"orders/cancel?orderId={orderId}", null,
                 cancellationToken);
         }
 
         public Task<OrdersResponse> Get(CancellationToken cancellationToken = default)
         {
-            return Get<OrdersResponse>($"{(Configuration.SandboxMode ? SandboxBasePath : BasePath)}/orders", cancellationToken);
+            return _rest.Get<OrdersResponse>("orders", cancellationToken);
         }
 
-        public Task<LimitOrderResponse> PostLimitOrder(string figi, LimitOrderRequest request,
+        public Task<LimitOrderResponse> PlaceLimitOrder(string figi, PlaceLimitOrderRequest request,
             CancellationToken cancellationToken = default)
         {
-            return Post<LimitOrderRequest, LimitOrderResponse>($"{(Configuration.SandboxMode ? SandboxBasePath : BasePath)}/orders/limit-order?figi={figi}", request,
+            return _rest.Post<PlaceLimitOrderRequest, LimitOrderResponse>($"orders/limit-order?figi={figi}", request,
                 cancellationToken);
         }
     }

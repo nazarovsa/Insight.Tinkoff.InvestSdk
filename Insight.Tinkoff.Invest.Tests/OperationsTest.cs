@@ -1,3 +1,4 @@
+using System;
 using System.Threading;
 using System.Threading.Tasks;
 using Insight.Tinkoff.Invest.Domain;
@@ -23,9 +24,11 @@ namespace Insight.Tinkoff.Invest.Tests
         {
             var filter = new OperationsFilter
             {
+                From = DateTime.Now - TimeSpan.FromDays(30),
+                To = DateTime.Now,
                 // Accenture
                 Figi = "BBG000D9D830",
-                Interval = OperationInterval.Day
+                Interval = OperationInterval.Month
             };
 
             var response = await _operationService.Get(filter, CancellationToken.None);

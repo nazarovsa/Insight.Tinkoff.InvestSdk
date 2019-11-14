@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using Newtonsoft.Json;
@@ -8,18 +9,18 @@ namespace Insight.Tinkoff.Invest.Dto.Payloads
     {
         [JsonConstructor]
         public OrderBookPayload(
-            [JsonProperty("figi")] string figi,
-            [JsonProperty("depth")] int depth,
-            [JsonProperty("asks")] IReadOnlyCollection<List<decimal>> asks,
-            [JsonProperty("bids")] IReadOnlyCollection<List<decimal>> bids)
+            string figi,
+            int depth,
+            IReadOnlyCollection<List<decimal>> asks,
+            IReadOnlyCollection<List<decimal>> bids)
         {
             Figi = figi;
             Depth = depth;
             Asks = asks
-                .Select(x => new LotOffer {Price = x[0], Quantity = x[1]})
+                .Select(x => new LotOffer(x[0], x[1]))
                 .ToList();
             Bids = bids
-                .Select(x => new LotOffer {Price = x[0], Quantity = x[1]})
+                .Select(x => new LotOffer(x[0], x[1]))
                 .ToList();
         }
 
@@ -43,8 +44,17 @@ namespace Insight.Tinkoff.Invest.Dto.Payloads
 
     public sealed class LotOffer
     {
-        public decimal Price { get; set; }
+        public LotOffer(decimal price, decimal quantity)
+        {
+            if (quantity == 0)
+                throw new ArgumentException("Quantity can not be 0");
 
-        public decimal Quantity { get; set; }
+            Price = price;
+            Quantity = quantity;
+        }
+
+        public decimal Price { get; private set; }
+
+        public decimal Quantity { get; private set; }
     }
 }
