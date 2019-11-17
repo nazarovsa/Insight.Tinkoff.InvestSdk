@@ -6,7 +6,7 @@ namespace Insight.Tinkoff.Invest.Dto.Messages
     {
         public string Event => EventType.SubscribeInstrumentInfo;
 
-        public string Figi { get; set; }
+        public string Figi { get; private set; }
 
         public SubscribeInstrumentInfoMessage(string figi)
         {

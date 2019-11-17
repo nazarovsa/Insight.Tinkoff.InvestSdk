@@ -6,9 +6,9 @@ namespace Insight.Tinkoff.Invest.Dto.Messages
     {
         public string Event => EventType.SubscribeOrderBook;
 
-        public string Figi { get; set; }
+        public string Figi { get; private set; }
 
-        public int Depth { get; set; }
+        public int Depth { get; private set; }
 
         public SubscribeOrderBookMessage(string figi, int depth)
         {

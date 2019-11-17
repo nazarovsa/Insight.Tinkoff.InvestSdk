@@ -43,8 +43,8 @@ public interface IStreamMarketService
 }
 ```
 
-Соотвественно метод Send служит для отправки сообщений на подписку/отписку от событий. Типы исходящих сообщений реализуют интерфейс *IWsMessage*: *SubscribeCandleMessage*, *UnsubscribeCandleMessage*, *SubscribeOrderBookMessage*, *UnsubscribeOrderBookMessage*, *SubscribeInstrumentInfoMessage*, *UnsubscribeInstrumentInfoMessage*;
-Метод AsObservable() реализован с помощью [System.Reactive](https://www.nuget.org/packages/System.Reactive/), а именно с помощью *Observable.FromEventPattern*, благодаря этому вы получаете Push коллекцию, в которую будут приходить сообщения типа *WsMessage*: *CandleMessage*, *OrderBookMessage*, *InstrumentInfoMessage*. На выходе сообщения десериализуются в правильный тип на основе свойства Event, вы можете использовать Pattern Matching. Пример кода:
+Соотвественно метод Send служит для отправки сообщений на подписку/отписку от событий. Классы сообщений реализуют интерфейс *IWsMessage*: *SubscribeCandleMessage*, *UnsubscribeCandleMessage*, *SubscribeOrderBookMessage*, *UnsubscribeOrderBookMessage*, *SubscribeInstrumentInfoMessage*, *UnsubscribeInstrumentInfoMessage*, *CandleMessage*, *OrderBookMessage*, *InstrumentInfoMessage*. 
+giМетод AsObservable() реализован с помощью [System.Reactive](https://www.nuget.org/packages/System.Reactive/), а именно с помощью *Observable.FromEventPattern*, благодаря этому вы получаете Push коллекцию, в которую будут приходить сообщения типа IWsMessage (*CandleMessage*, *OrderBookMessage*, *InstrumentInfoMessage*). На выходе сообщения десериализуются в правильный тип на основе свойства Event интерфейса IWsMessage, вы можете использовать Pattern Matching. Пример кода:
 ```
 public sealed class Program {
   private StreamConfiguration _config;

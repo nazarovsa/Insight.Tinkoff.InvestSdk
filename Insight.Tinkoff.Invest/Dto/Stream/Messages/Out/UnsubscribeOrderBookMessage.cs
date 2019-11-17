@@ -6,6 +6,10 @@ namespace Insight.Tinkoff.Invest.Dto.Messages
     {
         public string Event => EventType.UnsbscribeOrderBook;
 
+        public string Figi { get; private set; }
+
+        public int Depth { get; private set; }
+
         public UnsubscribeOrderBookMessage(string figi, int depth)
         {
             if (string.IsNullOrWhiteSpace(figi))
@@ -14,9 +18,5 @@ namespace Insight.Tinkoff.Invest.Dto.Messages
             Figi = figi;
             Depth = depth;
         }
-
-        public string Figi { get; private set; }
-
-        public int Depth { get; private set; }
     }
 }
