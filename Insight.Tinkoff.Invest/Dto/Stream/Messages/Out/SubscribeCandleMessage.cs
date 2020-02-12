@@ -7,18 +7,18 @@ namespace Insight.Tinkoff.Invest.Dto.Messages
     {
         public string Event => EventType.SubscribeCandle;
 
+        public string Figi { get; private set; }
+
+        public CandleInterval Interval { get; private set; }
+
         public SubscribeCandleMessage(string figi, CandleInterval interval)
         {
             if (string.IsNullOrWhiteSpace(figi))
                 throw new ArgumentNullException(nameof(figi));
-            
+
             Figi = figi;
             Interval = interval;
         }
-
-        public string Figi { get; private set; }
-
-        public CandleInterval Interval { get; private set; }
 
         public override int GetHashCode()
         {

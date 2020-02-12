@@ -41,7 +41,7 @@ namespace Insight.Tinkoff.Invest.Services
             await _socket.SendAsync(buffer, WebSocketMessageType.Text, true, cancellationToken);
         }
 
-        public IObservable<WsMessage> AsObservable()
+        public IObservable<IWsMessage> AsObservable()
         {
             return Observable.FromEventPattern<MessageReceived, string>(
                     handler =>
@@ -106,9 +106,9 @@ namespace Insight.Tinkoff.Invest.Services
             return Task.CompletedTask;
         }
 
-        private WsMessage DeserializeMessage(string message)
+        private IWsMessage DeserializeMessage(string message)
         {
-            var eventType = JSerializer.Deserialize<WsMessage>(message).Event;
+            var eventType = JSerializer.Deserialize<IWsMessage>(message).Event;
             switch (eventType)
             {
                 case EventType.OrderBook:

@@ -9,6 +9,6 @@ namespace Insight.Tinkoff.Invest.Domain
     {
         Task Send(IWsMessage message, CancellationToken cancellationToken = default);
 
-        IObservable<WsMessage> AsObservable();
+        IObservable<IWsMessage> AsObservable();
     }
 }
