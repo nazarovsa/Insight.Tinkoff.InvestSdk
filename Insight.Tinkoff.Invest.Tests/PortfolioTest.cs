@@ -1,3 +1,4 @@
+using System.Net.Http;
 using System.Threading;
 using System.Threading.Tasks;
 using Insight.Tinkoff.Invest.Domain;
@@ -13,7 +14,7 @@ namespace Insight.Tinkoff.Invest.Tests
         
         public PortfolioTest()
         {
-            _portfolioService = new PortfolioService(RestConfiguration);
+            _portfolioService = new PortfolioService(RestConfiguration, new HttpClient());
         }
 
         [Fact]

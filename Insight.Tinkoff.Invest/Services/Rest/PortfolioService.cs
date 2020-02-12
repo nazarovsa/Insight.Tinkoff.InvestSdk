@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Net.Http;
 using System.Threading;
 using System.Threading.Tasks;
 using Insight.Tinkoff.Invest.Domain;
@@ -12,12 +13,12 @@ namespace Insight.Tinkoff.Invest.Services
     {
         private readonly TinkoffRestService _rest;
 
-        public PortfolioService(RestConfiguration configuration)
+        public PortfolioService(RestConfiguration configuration, HttpClient client = null)
         {
             if (configuration == null)
                 throw new ArgumentNullException(nameof(configuration));
-            
-            _rest = new TinkoffRestService(configuration);
+
+            _rest = new TinkoffRestService(configuration, client);
         }
 
         public async Task<CurrenciesResponse> GetCurrencies(CancellationToken token = default)

@@ -1,6 +1,8 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Net;
 using System.Net.Http;
+using System.Net.Http.Headers;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
@@ -11,19 +13,21 @@ namespace Insight.Tinkoff.Invest.Infrastructure.Services
 {
     internal abstract class RestService
     {
-        private HttpClient _client;
+        protected HttpClient Client;
 
         protected string BaseUrl { get; }
 
-        protected RestService(string baseUrl)
+        protected RestService(string baseUrl, HttpClient client = null)
         {
             if (string.IsNullOrWhiteSpace(baseUrl))
                 throw new ArgumentNullException(nameof(baseUrl));
 
             BaseUrl = baseUrl;
+            Client = client;
         }
 
-        internal virtual async Task<TO> Post<TI, TO>(string path, TI payload, CancellationToken cancellationToken = default)
+        internal virtual async Task<TO> Post<TI, TO>(string path, TI payload,
+            CancellationToken cancellationToken = default)
         {
             var request = new HttpRequestMessage(HttpMethod.Post, GetRequestUrl(path));
             if (payload != null)
@@ -37,20 +41,22 @@ namespace Insight.Tinkoff.Invest.Infrastructure.Services
         internal virtual async Task<T> Get<T>(string path, CancellationToken cancellationToken = default)
         {
             var request = new HttpRequestMessage(HttpMethod.Get, GetRequestUrl(path));
-            var response = await EnsureHttpClientCreated()
-                .SendAsync(request, cancellationToken);
+            var client = EnsureHttpClientCreated();
+            var response = await client.SendAsync(request, cancellationToken);
             return await GetResponseItem<T>(path, response);
         }
 
         internal virtual async Task<T> Delete<T>(string path, CancellationToken cancellationToken = default)
         {
             var request = new HttpRequestMessage(HttpMethod.Delete, GetRequestUrl(path));
-            var response = await EnsureHttpClientCreated()
+            var client = EnsureHttpClientCreated();
+            var response = await client
                 .SendAsync(request, cancellationToken);
             return await GetResponseItem<T>(path, response);
         }
 
-        internal virtual async Task<TO> Put<TI, TO>(string path, TI payload, CancellationToken cancellationToken = default)
+        internal virtual async Task<TO> Put<TI, TO>(string path, TI payload,
+            CancellationToken cancellationToken = default)
         {
             var request = new HttpRequestMessage(HttpMethod.Post, GetRequestUrl(path));
             if (payload != null)
@@ -84,15 +90,13 @@ namespace Insight.Tinkoff.Invest.Infrastructure.Services
 
         private HttpClient EnsureHttpClientCreated()
         {
-            if (_client == null)
-                _client = CreateClient();
+            if (Client == null)
+                Client = new HttpClient { BaseAddress = new Uri(BaseUrl)};
 
-            return _client;
+            SetHeaders();
+            return Client;
         }
 
-        protected virtual HttpClient CreateClient()
-        {
-            return new HttpClient {BaseAddress = new Uri(BaseUrl)};
-        }
+        protected abstract void SetHeaders();
     }
 }

@@ -1,3 +1,4 @@
+using System.Net.Http;
 using System.Threading;
 using System.Threading.Tasks;
 using Insight.Tinkoff.Invest.Domain;
@@ -15,8 +16,9 @@ namespace Insight.Tinkoff.Invest.Tests
 
         public OrderTest()
         {
-            _orderService = new OrderService(RestConfiguration);
-            _sandboxService = new SandboxService(RestConfiguration);
+            var client = new HttpClient();
+            _orderService = new OrderService(RestConfiguration, client);
+            _sandboxService = new SandboxService(RestConfiguration, client);
         }
 
         [Fact]

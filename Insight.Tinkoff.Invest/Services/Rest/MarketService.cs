@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Net.Http;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Web;
@@ -15,12 +16,12 @@ namespace Insight.Tinkoff.Invest.Services
     {
         private readonly TinkoffRestService _rest;
 
-        public MarketService(RestConfiguration configuration)
+        public MarketService(RestConfiguration configuration, HttpClient client = null)
         {
             if (configuration == null)
                 throw new ArgumentNullException(nameof(configuration));
 
-            _rest = new TinkoffRestService(configuration);
+            _rest = new TinkoffRestService(configuration, client);
         }
 
         public Task<MarketInstrumentListResponse> GetBonds(CancellationToken cancellationToken = default)

@@ -1,3 +1,4 @@
+using System.Net.Http;
 using System.Threading;
 using System.Threading.Tasks;
 using Insight.Tinkoff.Invest.Domain;
@@ -14,7 +15,7 @@ namespace Insight.Tinkoff.Invest.Tests
 
         public SandboxTest()
         {
-            _sandboxService = new SandboxService(RestConfiguration);
+            _sandboxService = new SandboxService(RestConfiguration, new HttpClient());
         }
 
         [Fact]

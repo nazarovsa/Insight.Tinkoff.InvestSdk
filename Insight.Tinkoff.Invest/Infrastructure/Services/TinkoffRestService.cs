@@ -18,8 +18,8 @@ namespace Insight.Tinkoff.Invest.Infrastructure.Services
 
         internal string BasePath { get; } = "/openapi";
 
-        internal TinkoffRestService(RestConfiguration configuration) :
-            base(configuration.BaseUrl)
+        internal TinkoffRestService(RestConfiguration configuration, HttpClient httpClient = null) :
+            base(configuration.BaseUrl, httpClient)
         {
             if (configuration == null)
                 throw new ArgumentNullException(nameof(configuration));
@@ -53,12 +53,10 @@ namespace Insight.Tinkoff.Invest.Infrastructure.Services
             return $"{(Configuration.SandboxMode ? SandboxBasePath : BasePath)}/{path}";
         }
 
-        protected override HttpClient CreateClient()
+        protected override void SetHeaders()
         {
-            var client = new HttpClient {BaseAddress = new Uri(BaseUrl)};
-            client.DefaultRequestHeaders.Authorization =
+            Client.DefaultRequestHeaders.Authorization =
                 new AuthenticationHeaderValue("Bearer", Configuration.AccessToken);
-            return client;
         }
     }
 }
