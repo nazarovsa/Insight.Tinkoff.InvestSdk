@@ -8,7 +8,7 @@
         <PackageProjectUrl>https://github.com/InsightAppDev/TinkoffInvestNetSdk/</PackageProjectUrl>
         <RepositoryUrl>https://github.com/InsightAppDev/TinkoffInvestNetSdk/</RepositoryUrl>
         <RepositoryType>Github</RepositoryType>
-        <PackageVersion>1.3.0</PackageVersion>
+        <PackageVersion>2.0.0</PackageVersion>
         <PackageLicenseExpression>Apache-2.0</PackageLicenseExpression>
         <PackageId>Insight.Tinkoff.InvestSdk</PackageId>
         <Nullable>disable</Nullable>
