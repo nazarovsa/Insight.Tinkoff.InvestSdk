@@ -1,8 +1,8 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Insight.Tinkoff.Invest", "Insight.Tinkoff.Invest\Insight.Tinkoff.Invest.csproj", "{35949211-FE71-430D-AEC9-AD547D583114}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Insight.Tinkoff.InvestSdk", "src\Insight.Tinkoff.InvestSdk\Insight.Tinkoff.InvestSdk.csproj", "{4752A864-3977-4E9B-8A47-73F32AB48955}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Insight.Tinkoff.Invest.Tests", "Insight.Tinkoff.Invest.Tests\Insight.Tinkoff.Invest.Tests.csproj", "{BE6BCD00-EFA6-4234-9CA5-BA51219ED50A}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Insight.Tinkoff.InvestSdk.Tests", "tests\Insight.Tinkoff.InvestSdk.Tests\Insight.Tinkoff.InvestSdk.Tests.csproj", "{DC0D9D75-3331-4075-B313-E0893149FA60}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -10,13 +10,13 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{35949211-FE71-430D-AEC9-AD547D583114}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{35949211-FE71-430D-AEC9-AD547D583114}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{35949211-FE71-430D-AEC9-AD547D583114}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{35949211-FE71-430D-AEC9-AD547D583114}.Release|Any CPU.Build.0 = Release|Any CPU
-		{BE6BCD00-EFA6-4234-9CA5-BA51219ED50A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{BE6BCD00-EFA6-4234-9CA5-BA51219ED50A}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{BE6BCD00-EFA6-4234-9CA5-BA51219ED50A}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{BE6BCD00-EFA6-4234-9CA5-BA51219ED50A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4752A864-3977-4E9B-8A47-73F32AB48955}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4752A864-3977-4E9B-8A47-73F32AB48955}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4752A864-3977-4E9B-8A47-73F32AB48955}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4752A864-3977-4E9B-8A47-73F32AB48955}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DC0D9D75-3331-4075-B313-E0893149FA60}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DC0D9D75-3331-4075-B313-E0893149FA60}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DC0D9D75-3331-4075-B313-E0893149FA60}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DC0D9D75-3331-4075-B313-E0893149FA60}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal

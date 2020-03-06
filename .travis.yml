@@ -1,6 +1,21 @@
 language: csharp
+solution: Insight.Tinkoff.InvestSdk.sln
 mono: none
-dotnet: 3.0.100
-script:
- - dotnet restore
- - dotnet build
+dotnet: 3.1.101
+stages:
+ - build
+ - test
+ - publish
+jobs:
+ include:
+  - stage: build
+    name: build solution
+    script: dotnet restore && dotnet build
+  - stage: test
+    name: test solution
+    script: ./run-tests.sh "$TINKOFF_SANDBOX_TOKEN"
+  - stage: publish
+    name: publish nuget package
+    if: tag IS present
+    script: ./publish-nuget.sh "$NUGET_SOURCE" "$NUGET_KEY" "$TRAVIS_TAG"
+
