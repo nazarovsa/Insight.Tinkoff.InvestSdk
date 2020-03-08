@@ -1,4 +1,4 @@
-namespace Insight.Tinkoff.InvestSdk.Dto
+namespace Insight.Tinkoff.InvestSdk.Dto.Payloads
 {
     public sealed class PlaceLimitOrderPayload
     {

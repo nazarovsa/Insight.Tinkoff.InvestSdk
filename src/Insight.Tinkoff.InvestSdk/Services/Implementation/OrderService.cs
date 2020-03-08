@@ -1,8 +1,7 @@
-﻿using System;
-using System.Net.Http;
+﻿using System.Net.Http;
 using System.Threading;
 using System.Threading.Tasks;
-using Insight.Tinkoff.InvestSdk.Dto;
+using Insight.Tinkoff.InvestSdk.Dto.Payloads;
 using Insight.Tinkoff.InvestSdk.Dto.Responses;
 using Insight.Tinkoff.InvestSdk.Infrastructure;
 using Insight.Tinkoff.InvestSdk.Infrastructure.Configurations;

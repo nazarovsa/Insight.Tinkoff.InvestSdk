@@ -1,6 +1,6 @@
 using System.Threading;
 using System.Threading.Tasks;
-using Insight.Tinkoff.InvestSdk.Dto;
+using Insight.Tinkoff.InvestSdk.Dto.Payloads;
 using Insight.Tinkoff.InvestSdk.Dto.Responses;
 using Insight.Tinkoff.InvestSdk.Infrastructure;
 

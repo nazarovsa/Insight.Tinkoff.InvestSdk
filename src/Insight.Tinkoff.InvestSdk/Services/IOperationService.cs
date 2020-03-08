@@ -7,6 +7,7 @@ namespace Insight.Tinkoff.InvestSdk.Services
 {
     public interface IOperationService
     {
-        Task<OperationsResponse> Get(OperationsFilter filter, CancellationToken cancellationToken = default);
+        Task<OperationsResponse> Get(OperationsFilter filter, string brokerAccountId = null,
+            CancellationToken cancellationToken = default);
     }
 }

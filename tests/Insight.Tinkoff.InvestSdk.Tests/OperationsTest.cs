@@ -1,5 +1,4 @@
 using System;
-using System.Threading;
 using System.Threading.Tasks;
 using Insight.Tinkoff.InvestSdk.Dto;
 using Insight.Tinkoff.InvestSdk.Infrastructure;
@@ -30,7 +29,7 @@ namespace Insight.Tinkoff.InvestSdk.Tests
                 Interval = OperationInterval.Month
             };
 
-            var response = await _operationService.Get(filter, CancellationToken.None);
+            var response = await _operationService.Get(filter);
 
             ValidateRestResponse(response);
             Assert.NotNull(response.Operations);

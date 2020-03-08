@@ -1,7 +1,7 @@
 using System.Net.Http;
-using System.Threading;
 using System.Threading.Tasks;
 using Insight.Tinkoff.InvestSdk.Dto;
+using Insight.Tinkoff.InvestSdk.Dto.Payloads;
 using Insight.Tinkoff.InvestSdk.Services;
 using Insight.Tinkoff.InvestSdk.Tests.Base;
 using Xunit;
@@ -23,7 +23,7 @@ namespace Insight.Tinkoff.InvestSdk.Tests
         [Fact]
         public async Task Should_get_orders()
         {
-            var response = await _orderService.Get(null, CancellationToken.None);
+            var response = await _orderService.Get();
 
             ValidateRestResponse(response);
             Assert.NotNull(response.Orders);

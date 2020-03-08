@@ -1,5 +1,4 @@
 using System.Net.Http;
-using System.Threading;
 using System.Threading.Tasks;
 using Insight.Tinkoff.InvestSdk.Services;
 using Insight.Tinkoff.InvestSdk.Tests.Base;
@@ -19,7 +18,7 @@ namespace Insight.Tinkoff.InvestSdk.Tests
         [Fact]
         public async Task Should_get_portfolio()
         {
-            var response = await _portfolioService.GetPortfolio(CancellationToken.None);
+            var response = await _portfolioService.GetPortfolio();
             
             ValidateRestResponse(response);
             Assert.NotNull(response.Positions);
@@ -28,7 +27,7 @@ namespace Insight.Tinkoff.InvestSdk.Tests
         [Fact]
         public async Task Should_get_currencies()
         {
-            var response = await _portfolioService.GetCurrencies(CancellationToken.None);
+            var response = await _portfolioService.GetCurrencies();
             
             ValidateRestResponse(response);
             Assert.NotNull(response.Currencies);
