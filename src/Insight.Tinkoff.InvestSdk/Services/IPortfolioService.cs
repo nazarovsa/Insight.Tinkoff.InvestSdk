@@ -6,8 +6,8 @@ namespace Insight.Tinkoff.InvestSdk.Services
 {
     public interface IPortfolioService
     {
-        Task<CurrenciesResponse> GetCurrencies(CancellationToken token = default);
+        Task<CurrenciesResponse> GetCurrencies(string brokerAccountId = null, CancellationToken token = default);
 
-        Task<PortfolioResponse> GetPortfolio(CancellationToken token = default);
+        Task<PortfolioResponse> GetPortfolio(string brokerAccountId = null, CancellationToken token = default);
     }
 }

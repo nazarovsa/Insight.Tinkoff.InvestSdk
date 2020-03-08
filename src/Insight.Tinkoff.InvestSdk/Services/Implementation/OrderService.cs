@@ -23,13 +23,13 @@ namespace Insight.Tinkoff.InvestSdk.Services
             CancellationToken cancellationToken = default)
         {
             return _rest.Post<object, EmptyResponse>(
-                $"orders/cancel?orderId={orderId}{GetBrokerAccountIdQuery(brokerAccountId, "&")}", null,
+                $"orders/cancel?orderId={orderId}{BrokerAccountIdQueryHelper.Get(brokerAccountId, "&")}", null,
                 cancellationToken);
         }
 
         public Task<OrdersResponse> Get(string brokerAccountId = null, CancellationToken cancellationToken = default)
         {
-            return _rest.Get<OrdersResponse>($"orders{GetBrokerAccountIdQuery(brokerAccountId, "?")}",
+            return _rest.Get<OrdersResponse>($"orders{BrokerAccountIdQueryHelper.Get(brokerAccountId, "?")}",
                 cancellationToken);
         }
 
@@ -38,7 +38,7 @@ namespace Insight.Tinkoff.InvestSdk.Services
             CancellationToken cancellationToken = default)
         {
             return _rest.Post<PlaceLimitOrderPayload, LimitOrderResponse>(
-                $"orders/limit-order?figi={figi}{GetBrokerAccountIdQuery(brokerAccountId, "&")}", payload,
+                $"orders/limit-order?figi={figi}{BrokerAccountIdQueryHelper.Get(brokerAccountId, "&")}", payload,
                 cancellationToken);
         }
 
@@ -47,15 +47,8 @@ namespace Insight.Tinkoff.InvestSdk.Services
             CancellationToken cancellationToken = default)
         {
             return _rest.Post<PlaceMarketOrderPayload, MarketOrderResponse>(
-                $"orders/market-order?figi={figi}{GetBrokerAccountIdQuery(brokerAccountId, "&")}", payload,
+                $"orders/market-order?figi={figi}{BrokerAccountIdQueryHelper.Get(brokerAccountId, "&")}", payload,
                 cancellationToken);
-        }
-
-        private string GetBrokerAccountIdQuery(string brokerAccountId, string firstSymbol = "")
-        {
-            return string.IsNullOrWhiteSpace(brokerAccountId)
-                ? string.Empty
-                : $"{firstSymbol}brokerAccountId={brokerAccountId}";
         }
     }
 }
