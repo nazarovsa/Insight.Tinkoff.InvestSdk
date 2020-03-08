@@ -1,6 +1,6 @@
 namespace Insight.Tinkoff.InvestSdk.Dto
 {
-    public sealed class PlacedLimitOrder
+    public sealed class PlacedOrder
     {
         public string OrderId { get; set; }
 
