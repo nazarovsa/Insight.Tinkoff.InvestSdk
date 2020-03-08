@@ -1,5 +1,4 @@
-﻿using System;
-using System.Net.Http;
+﻿using System.Net.Http;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Web;
@@ -20,14 +19,14 @@ namespace Insight.Tinkoff.InvestSdk.Services
         {
             _rest = new TinkoffRestService(configuration, client);
         }
-        
-        public async Task<OperationsResponse> Get(OperationsFilter filter,
+
+        public async Task<OperationsResponse> Get(OperationsFilter filter, string brokerAccountId = null,
             CancellationToken cancellationToken = default)
         {
             var from = HttpUtility.UrlEncode(filter.From.ToString("yyyy-MM-ddTHH:mm:ss.ffffffK"));
             var to = HttpUtility.UrlEncode(filter.To.ToString("yyyy-MM-ddTHH:mm:ss.ffffffK"));
             return await _rest.Get<OperationsResponse>(
-                $"operations?from={from}&to={to}&interval={filter.Interval.GetEnumMemberAttributeValue()}&figi={filter.Figi}",
+                $"operations?from={from}&to={to}&interval={filter.Interval.GetEnumMemberAttributeValue()}&figi={filter.Figi}{BrokerAccountIdQueryHelper.Get(brokerAccountId, "&")}",
                 cancellationToken);
         }
     }

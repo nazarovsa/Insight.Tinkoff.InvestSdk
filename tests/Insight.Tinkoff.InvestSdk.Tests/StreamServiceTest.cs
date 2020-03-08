@@ -4,7 +4,6 @@ using System.Threading.Tasks;
 using Insight.Tinkoff.InvestSdk.Dto.Messages;
 using Insight.Tinkoff.InvestSdk.Dto.Payloads;
 using Insight.Tinkoff.InvestSdk.Infrastructure.Configurations;
-using Insight.Tinkoff.InvestSdk.Infrastructure.Extensions;
 using Insight.Tinkoff.InvestSdk.Services;
 using Insight.Tinkoff.InvestSdk.Tests.Base;
 using Newtonsoft.Json;

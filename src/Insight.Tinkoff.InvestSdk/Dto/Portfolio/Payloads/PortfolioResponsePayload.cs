@@ -1,6 +1,6 @@
 using System.Collections.Generic;
 
-namespace Insight.Tinkoff.InvestSdk.Dto.Responses.Payloads
+namespace Insight.Tinkoff.InvestSdk.Dto.Payloads
 {
     public sealed class PortfolioResponsePayload
     {

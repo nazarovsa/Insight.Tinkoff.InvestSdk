@@ -1,8 +1,7 @@
-﻿using System;
-using System.Net.Http;
+﻿using System.Net.Http;
 using System.Threading;
 using System.Threading.Tasks;
-using Insight.Tinkoff.InvestSdk.Dto;
+using Insight.Tinkoff.InvestSdk.Dto.Payloads;
 using Insight.Tinkoff.InvestSdk.Dto.Responses;
 using Insight.Tinkoff.InvestSdk.Infrastructure;
 using Insight.Tinkoff.InvestSdk.Infrastructure.Configurations;
@@ -19,21 +18,35 @@ namespace Insight.Tinkoff.InvestSdk.Services
             _rest = new TinkoffRestService(configuration, client);
         }
 
-        public Task<EmptyResponse> Cancel(string orderId, CancellationToken cancellationToken = default)
+        public Task<EmptyResponse> Cancel(string orderId, string brokerAccountId = null,
+            CancellationToken cancellationToken = default)
         {
-            return _rest.Post<object, EmptyResponse>($"orders/cancel?orderId={orderId}", null,
+            return _rest.Post<object, EmptyResponse>(
+                $"orders/cancel?orderId={orderId}{BrokerAccountIdQueryHelper.Get(brokerAccountId, "&")}", null,
                 cancellationToken);
         }
 
-        public Task<OrdersResponse> Get(CancellationToken cancellationToken = default)
+        public Task<OrdersResponse> Get(string brokerAccountId = null, CancellationToken cancellationToken = default)
         {
-            return _rest.Get<OrdersResponse>("orders", cancellationToken);
+            return _rest.Get<OrdersResponse>($"orders{BrokerAccountIdQueryHelper.Get(brokerAccountId, "?")}",
+                cancellationToken);
         }
 
-        public Task<LimitOrderResponse> PlaceLimitOrder(string figi, PlaceLimitOrderRequest request,
+        public Task<LimitOrderResponse> PlaceLimitOrder(string figi,
+            PlaceLimitOrderPayload payload, string brokerAccountId = null,
             CancellationToken cancellationToken = default)
         {
-            return _rest.Post<PlaceLimitOrderRequest, LimitOrderResponse>($"orders/limit-order?figi={figi}", request,
+            return _rest.Post<PlaceLimitOrderPayload, LimitOrderResponse>(
+                $"orders/limit-order?figi={figi}{BrokerAccountIdQueryHelper.Get(brokerAccountId, "&")}", payload,
+                cancellationToken);
+        }
+
+        public Task<MarketOrderResponse> PlaceMarketOrder(string figi,
+            PlaceMarketOrderPayload payload, string brokerAccountId = null,
+            CancellationToken cancellationToken = default)
+        {
+            return _rest.Post<PlaceMarketOrderPayload, MarketOrderResponse>(
+                $"orders/market-order?figi={figi}{BrokerAccountIdQueryHelper.Get(brokerAccountId, "&")}", payload,
                 cancellationToken);
         }
     }

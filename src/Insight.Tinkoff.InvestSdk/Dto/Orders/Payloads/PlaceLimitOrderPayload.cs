@@ -1,6 +1,6 @@
-namespace Insight.Tinkoff.InvestSdk.Dto
+namespace Insight.Tinkoff.InvestSdk.Dto.Payloads
 {
-    public sealed class PlaceLimitOrderRequest
+    public sealed class PlaceLimitOrderPayload
     {
         public int Lots { get; set; }
 
