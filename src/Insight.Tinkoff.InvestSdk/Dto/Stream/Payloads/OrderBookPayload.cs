@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Newtonsoft.Json;
 
-namespace Insight.Tinkoff.InvestSdk.Dto.Payloads
+namespace Insight.Tinkoff.InvestSdk.Dto.Stream
 {
     public class OrderBookPayload
     {
@@ -17,10 +17,10 @@ namespace Insight.Tinkoff.InvestSdk.Dto.Payloads
             Figi = figi;
             Depth = depth;
             Asks = asks
-                .Select(x => new LotOffer(x[0], x[1]))
+                .Select(x => new LotOffer(x[0], (int) x[1]))
                 .ToList();
             Bids = bids
-                .Select(x => new LotOffer(x[0], x[1]))
+                .Select(x => new LotOffer(x[0], (int) x[1]))
                 .ToList();
         }
 
@@ -44,7 +44,7 @@ namespace Insight.Tinkoff.InvestSdk.Dto.Payloads
 
     public sealed class LotOffer
     {
-        public LotOffer(decimal price, decimal quantity)
+        public LotOffer(decimal price, int quantity)
         {
             if (quantity == 0)
                 throw new ArgumentException("Quantity can not be 0");
@@ -55,6 +55,6 @@ namespace Insight.Tinkoff.InvestSdk.Dto.Payloads
 
         public decimal Price { get; private set; }
 
-        public decimal Quantity { get; private set; }
+        public int Quantity { get; private set; }
     }
 }

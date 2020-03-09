@@ -1,7 +1,7 @@
 using System;
 using Newtonsoft.Json;
 
-namespace Insight.Tinkoff.InvestSdk.Dto.Payloads
+namespace Insight.Tinkoff.InvestSdk.Dto.Stream
 {
     public sealed class CandlePayload
     {

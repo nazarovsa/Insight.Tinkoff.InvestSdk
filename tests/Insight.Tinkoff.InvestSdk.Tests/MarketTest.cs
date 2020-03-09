@@ -3,6 +3,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using Insight.Tinkoff.InvestSdk.Dto.Payloads;
 using Insight.Tinkoff.InvestSdk.Dto.Responses;
+using Insight.Tinkoff.InvestSdk.Dto.Stream;
 using Insight.Tinkoff.InvestSdk.Services;
 using Insight.Tinkoff.InvestSdk.Tests.Base;
 using Xunit;
@@ -77,6 +78,25 @@ namespace Insight.Tinkoff.InvestSdk.Tests
             ValidateRestResponse(response);
             Assert.False(string.IsNullOrWhiteSpace(response.Figi));
             Assert.NotNull(response.Candles);
+        }      
+        
+        [Fact]
+        public async Task Should_search_by_ticker()
+        {
+            var response = await _marketService.SearchByTicker("TCS", CancellationToken.None);
+            
+            ValidateRestResponse(response);
+            Assert.NotEmpty(response.Instruments);
+        }
+        
+        [Fact]
+        public async Task Should_search_by_figi()
+        {
+            var response = await _marketService.SearchByFigi(AccentureFigi, CancellationToken.None);
+            
+            ValidateRestResponse(response);
+            Assert.NotEmpty(response.Instrument.Figi);
+            Assert.NotEmpty(response.Instrument.Ticker);
         }
 
         private void ValidateInstrumentsResponse(MarketInstrumentListResponse response)

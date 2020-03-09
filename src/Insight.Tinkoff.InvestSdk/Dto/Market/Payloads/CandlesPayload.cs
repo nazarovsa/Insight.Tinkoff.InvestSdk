@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using Insight.Tinkoff.InvestSdk.Dto.Stream;
 
 namespace Insight.Tinkoff.InvestSdk.Dto.Payloads
 {

@@ -1,6 +1,6 @@
 using System;
 
-namespace Insight.Tinkoff.InvestSdk.Dto.Messages
+namespace Insight.Tinkoff.InvestSdk.Dto.Stream
 {
     public sealed class UnsubscribeOrderBookMessage : IWsMessage
     {
