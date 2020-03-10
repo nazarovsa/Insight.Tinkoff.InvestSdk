@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using Insight.Tinkoff.InvestSdk.Dto.Payloads;
+using Insight.Tinkoff.InvestSdk.Dto.Stream;
 using Insight.Tinkoff.InvestSdk.Infrastructure;
 using Newtonsoft.Json;
 

@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using Insight.Tinkoff.InvestSdk.Dto.Stream;
 using Newtonsoft.Json;
 
 namespace Insight.Tinkoff.InvestSdk.Dto.Payloads
@@ -14,7 +15,7 @@ namespace Insight.Tinkoff.InvestSdk.Dto.Payloads
             [JsonProperty("closePrice")] decimal closePrice,
             [JsonProperty("limitUp")] decimal limitUp,
             [JsonProperty("limitDown")] decimal limitDown,
-            [JsonProperty("tradeStatus")] TradeStatus tradeStatus)
+            [JsonProperty("tradeStatus")] Stream.TradeStatus tradeStatus)
         {
             Figi = figi;
             Depth = depth;
@@ -29,7 +30,7 @@ namespace Insight.Tinkoff.InvestSdk.Dto.Payloads
         
         public string Figi { get; set; }
         
-        public TradeStatus TradeStatus { get; set; }
+        public Stream.TradeStatus TradeStatus { get; set; }
 
         /// <summary>
         /// Глубина стакана

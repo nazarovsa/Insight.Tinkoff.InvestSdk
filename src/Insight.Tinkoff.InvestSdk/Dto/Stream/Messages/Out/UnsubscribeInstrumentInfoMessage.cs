@@ -2,21 +2,18 @@ using System;
 
 namespace Insight.Tinkoff.InvestSdk.Dto.Stream
 {
-    public sealed class UnsubscribeOrderBookMessage : IWsMessage
+    public sealed class UnsubscribeInstrumentInfoMessage : IWsMessage
     {
-        public string Event => EventType.UnsubscribeOrderBook;
+        public string Event => EventType.UnsubscribeInstrumentInfo;
 
         public string Figi { get; private set; }
 
-        public int Depth { get; private set; }
-
-        public UnsubscribeOrderBookMessage(string figi, int depth)
+        public UnsubscribeInstrumentInfoMessage(string figi)
         {
             if (string.IsNullOrWhiteSpace(figi))
                 throw new ArgumentNullException(nameof(figi));
 
             Figi = figi;
-            Depth = depth;
         }
     }
 }

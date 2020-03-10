@@ -6,6 +6,7 @@ using System.Web;
 using Insight.Tinkoff.InvestSdk.Infrastructure.Extensions;
 using Insight.Tinkoff.InvestSdk.Dto.Payloads;
 using Insight.Tinkoff.InvestSdk.Dto.Responses;
+using Insight.Tinkoff.InvestSdk.Dto.Stream;
 using Insight.Tinkoff.InvestSdk.Infrastructure.Configurations;
 using Insight.Tinkoff.InvestSdk.Infrastructure.Services;
 

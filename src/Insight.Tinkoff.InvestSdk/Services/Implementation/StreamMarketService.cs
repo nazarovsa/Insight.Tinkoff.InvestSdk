@@ -1,27 +1,26 @@
 using System;
 using System.Net.WebSockets;
 using System.Reactive.Linq;
-using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
-using Insight.Tinkoff.InvestSdk.Dto.Messages;
+using Insight.Tinkoff.InvestSdk.Dto.Stream;
 using Insight.Tinkoff.InvestSdk.Infrastructure.Configurations;
 using Insight.Tinkoff.InvestSdk.Infrastructure.Json;
+using Websocket.Client;
 
 namespace Insight.Tinkoff.InvestSdk.Services
 {
-    public delegate void MessageReceived(object sender, string message);
-
-    public class StreamMarketService : IStreamMarketService
+    public sealed class StreamMarketService : IStreamMarketService, IDisposable
     {
-        private ClientWebSocket _socket;
-        
-        private readonly StreamConfiguration _configuration;
-
-        private event MessageReceived OnMessageReceived;
+        private WebsocketClient _client;
 
         private bool Disposed { get; set; }
 
+        private readonly StreamConfiguration _configuration;
+
+        private readonly SubscriptionsCollection _subscriptions;
+
+        private IDisposable _reconnectionHandler;
 
         public StreamMarketService(StreamConfiguration configuration)
         {
@@ -29,35 +28,30 @@ namespace Insight.Tinkoff.InvestSdk.Services
                 throw new ArgumentNullException(nameof(configuration));
 
             _configuration = configuration;
+
+            if (_configuration.ResubscribeOnReconnect)
+                _subscriptions = new SubscriptionsCollection();
         }
+
 
         public async Task Send(IWsMessage message, CancellationToken cancellationToken = default)
         {
             await EnsureSocketConnection();
 
-            var json = JSerializer.Serialize(message);
-            var data = Encoding.UTF8.GetBytes(json);
-            var buffer = new ArraySegment<byte>(data);
-            await _socket.SendAsync(buffer, WebSocketMessageType.Text, true, cancellationToken);
+            await Task.Run(() => _client.Send(JSerializer.Serialize(message)), cancellationToken);
+
+            if (_configuration.ResubscribeOnReconnect)
+                _subscriptions.Push(message);
         }
 
         public IObservable<IWsMessage> AsObservable()
         {
-            return Observable.FromEventPattern<MessageReceived, string>(
-                    handler =>
-                    {
-                        EnsureSocketConnection().Wait();
+            EnsureSocketConnection().Wait();
 
-                        OnMessageReceived += handler;
-                    },
-                    handler =>
-                    {
-                        Disconnect().Wait();
-
-                        OnMessageReceived -= handler;
-                    })
-                .Select(x => DeserializeMessage(x.EventArgs));
+            return _client.MessageReceived
+                .Select(x => DeserializeMessage(x.Text));
         }
+
 
         public void Dispose()
         {
@@ -67,48 +61,36 @@ namespace Insight.Tinkoff.InvestSdk.Services
 
         private async Task EnsureSocketConnection()
         {
-            if (_socket != null)
+            if (_client != null)
                 return;
 
-            if (Interlocked.CompareExchange(ref _socket, new ClientWebSocket(), null) != null)
+            var exchange = Interlocked.CompareExchange(ref _client,
+                new WebsocketClient(new Uri(_configuration.Address),
+                    () =>
+                    {
+                        var clientWebSocket = new ClientWebSocket();
+                        clientWebSocket.Options.SetRequestHeader("Authorization",
+                            $"Bearer {_configuration.AccessToken}");
+                        return clientWebSocket;
+                    }), null);
+            if (exchange != null)
                 return;
 
-            _socket.Options.SetRequestHeader("Authorization", $"Bearer {_configuration.AccessToken}");
-            await _socket.ConnectAsync(new Uri(_configuration.Address), CancellationToken.None);
+            await _client.Start();
 
-            await Receiving();
-        }
-
-        private Task Receiving()
-        {
-            var buffer = new byte[8192];
-            Task.Run(async () =>
-            {
-                while (_socket.State == WebSocketState.Open)
+            if (_configuration.ResubscribeOnReconnect)
+                _reconnectionHandler = _client.ReconnectionHappened.Subscribe(x =>
                 {
-                    var result = await _socket.ReceiveAsync(new ArraySegment<byte>(buffer), CancellationToken.None);
-
-                    if (result.MessageType == WebSocketMessageType.Text)
+                    foreach (var subscription in _subscriptions.Subscriptions)
                     {
-                        var json = Encoding.UTF8.GetString(buffer, 0, result.Count);
-                        OnMessageReceived?.Invoke(this, json);
+                        Send(subscription).Wait();
                     }
-                    else if (result.MessageType == WebSocketMessageType.Close)
-                    {
-                        await Disconnect();
-                        _socket.Dispose();
-                        _socket = null;
-                        break;
-                    }
-                }
-            });
-
-            return Task.CompletedTask;
+                });
         }
 
         private IWsMessage DeserializeMessage(string message)
         {
-            var eventType = JSerializer.Deserialize<IWsMessage>(message).Event;
+            var eventType = JSerializer.Deserialize<WsMessage>(message).Event;
             switch (eventType)
             {
                 case EventType.OrderBook:
@@ -124,19 +106,14 @@ namespace Insight.Tinkoff.InvestSdk.Services
             }
         }
 
-        private async Task Disconnect()
-        {
-            await _socket.CloseOutputAsync(WebSocketCloseStatus.NormalClosure, "Normal closure",
-                CancellationToken.None);
-        }
-
         private void Dispose(bool disposing)
         {
             if (!Disposed)
             {
                 if (disposing)
                 {
-                    _socket.Dispose();
+                    _reconnectionHandler.Dispose();
+                    _client.Dispose();
                 }
 
                 Disposed = true;

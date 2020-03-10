@@ -5,5 +5,7 @@ namespace Insight.Tinkoff.InvestSdk.Infrastructure.Configurations
         public string Address { get; set; } = "wss://api-invest.tinkoff.ru/openapi/md/v1/md-openapi/ws";
 
         public string AccessToken { get; set; }
+        
+        public bool ResubscribeOnReconnect { get; set; }
     }
 }
