@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Reactive.Linq;
 using System.Threading.Tasks;
-using Insight.Tinkoff.InvestSdk.Dto.Payloads;
 using Insight.Tinkoff.InvestSdk.Dto.Stream;
 using Insight.Tinkoff.InvestSdk.Infrastructure.Configurations;
 using Insight.Tinkoff.InvestSdk.Services;
@@ -17,15 +16,10 @@ namespace Insight.Tinkoff.InvestSdk.Tests
     public sealed class StreamMarketServiceTest : TestBase
     {
         private readonly ITestOutputHelper _testOutputHelper;
-        private readonly IStreamMarketService _streamService;
 
         public StreamMarketServiceTest(ITestOutputHelper testOutputHelper)
         {
             _testOutputHelper = testOutputHelper;
-            _streamService = new StreamMarketService(new StreamConfiguration
-            {
-                AccessToken = Token
-            });
         }
 
         [Fact]
@@ -34,32 +28,39 @@ namespace Insight.Tinkoff.InvestSdk.Tests
             var obMessages = new List<OrderBookMessage>();
             var iiMessages = new List<InstrumentInfoMessage>();
             var cMessages = new List<CandleMessage>();
-            var subscription = _streamService
-                .AsObservable()
-                .Do(x =>
-                {
-                    switch (x)
+            using (var streamService = new StreamMarketService(new StreamConfiguration
+            {
+                AccessToken = Token,
+                ResubscribeOnReconnect = true
+            }))
+            {
+                var subscription = streamService
+                    .AsObservable()
+                    .Do(x =>
                     {
-                        case OrderBookMessage m:
-                            obMessages.Add(m);
-                            break;
-                        case InstrumentInfoMessage m:
-                            iiMessages.Add(m);
-                            break;
-                        case CandleMessage m:
-                            cMessages.Add(m);
-                            break;
-                        default:
-                            throw new ArgumentException(nameof(x));
-                    }
-                }, ex => { throw ex; })
-                .Subscribe();
+                        switch (x)
+                        {
+                            case OrderBookMessage m:
+                                obMessages.Add(m);
+                                break;
+                            case InstrumentInfoMessage m:
+                                iiMessages.Add(m);
+                                break;
+                            case CandleMessage m:
+                                cMessages.Add(m);
+                                break;
+                            default:
+                                throw new ArgumentException(nameof(x));
+                        }
+                    }, ex => { throw ex; })
+                    .Subscribe();
 
-            await _streamService.Send(new SubscribeOrderBookMessage("BBG000D9D830", 5));
-            await _streamService.Send(new SubscribeInstrumentInfoMessage("BBG000D9D830"));
-            await _streamService.Send(new SubscribeCandleMessage("BBG000D9D830", CandleInterval.Minute));
+                await streamService.Send(new SubscribeOrderBookMessage("BBG000D9D830", 5));
+                await streamService.Send(new SubscribeInstrumentInfoMessage("BBG000D9D830"));
+                await streamService.Send(new SubscribeCandleMessage("BBG000D9D830", CandleInterval.Minute));
 
-            await Task.Delay(5 * 1000);
+                await Task.Delay(5 * 1000);
+            }
 
             foreach (var orderBookMessage in obMessages)
             {

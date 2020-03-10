@@ -2,13 +2,13 @@ using System;
 
 namespace Insight.Tinkoff.InvestSdk.Dto.Stream
 {
-    public sealed class UnsubscribeInstrumentInfo : IWsMessage
+    public sealed class UnsubscribeInstrumentInfoMessage : IWsMessage
     {
-        public string Event => EventType.UnubscribeInstrumentInfo;
+        public string Event => EventType.UnsubscribeInstrumentInfo;
 
         public string Figi { get; private set; }
 
-        public UnsubscribeInstrumentInfo(string figi)
+        public UnsubscribeInstrumentInfoMessage(string figi)
         {
             if (string.IsNullOrWhiteSpace(figi))
                 throw new ArgumentNullException(nameof(figi));

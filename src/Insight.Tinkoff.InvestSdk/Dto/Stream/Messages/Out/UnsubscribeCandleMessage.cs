@@ -4,7 +4,7 @@ namespace Insight.Tinkoff.InvestSdk.Dto.Stream
 {
     public sealed class UnsubscribeCandleMessage : IWsMessage
     {
-        public string Event => EventType.UnubscribeCandle;
+        public string Event => EventType.UnsubscribeCandle;
         
         public string Figi { get; private set; }
 

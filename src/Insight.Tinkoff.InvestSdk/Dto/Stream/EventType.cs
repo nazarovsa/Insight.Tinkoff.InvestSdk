@@ -12,14 +12,14 @@ namespace Insight.Tinkoff.InvestSdk.Dto.Stream
 
         internal const string SubscribeOrderBook = "orderbook:subscribe";
 
-        internal const string UnsbscribeOrderBook = "orderbook:unsubscribe";
+        internal const string UnsubscribeOrderBook = "orderbook:unsubscribe";
 
         internal const string SubscribeInstrumentInfo = "instrument_info:subscribe";
 
-        internal const string UnubscribeInstrumentInfo = "instrument_info:unsubscribe";
+        internal const string UnsubscribeInstrumentInfo = "instrument_info:unsubscribe";
 
         internal const string SubscribeCandle = "candle:subscribe";
 
-        internal const string UnubscribeCandle = "candle:unsubscribe";
+        internal const string UnsubscribeCandle = "candle:unsubscribe";
     }
 }

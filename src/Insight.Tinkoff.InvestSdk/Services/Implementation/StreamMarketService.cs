@@ -18,12 +18,19 @@ namespace Insight.Tinkoff.InvestSdk.Services
 
         private readonly StreamConfiguration _configuration;
 
+        private readonly SubscriptionsCollection _subscriptions;
+
+        private IDisposable _reconnectionHandler;
+
         public StreamMarketService(StreamConfiguration configuration)
         {
             if (configuration == null)
                 throw new ArgumentNullException(nameof(configuration));
 
             _configuration = configuration;
+
+            if (_configuration.ResubscribeOnReconnect)
+                _subscriptions = new SubscriptionsCollection();
         }
 
 
@@ -32,6 +39,9 @@ namespace Insight.Tinkoff.InvestSdk.Services
             await EnsureSocketConnection();
 
             await Task.Run(() => _client.Send(JSerializer.Serialize(message)), cancellationToken);
+
+            if (_configuration.ResubscribeOnReconnect)
+                _subscriptions.Push(message);
         }
 
         public IObservable<IWsMessage> AsObservable()
@@ -67,6 +77,15 @@ namespace Insight.Tinkoff.InvestSdk.Services
                 return;
 
             await _client.Start();
+
+            if (_configuration.ResubscribeOnReconnect)
+                _reconnectionHandler = _client.ReconnectionHappened.Subscribe(x =>
+                {
+                    foreach (var subscription in _subscriptions.Subscriptions)
+                    {
+                        Send(subscription).Wait();
+                    }
+                });
         }
 
         private IWsMessage DeserializeMessage(string message)
@@ -93,6 +112,7 @@ namespace Insight.Tinkoff.InvestSdk.Services
             {
                 if (disposing)
                 {
+                    _reconnectionHandler.Dispose();
                     _client.Dispose();
                 }
 
