@@ -15,21 +15,24 @@ Firstly get access token - [description of procedure](https://github.com/Tinkoff
 Structure of SDK
 --------------------
 Interaction with the API occurs through the following services:
-* *MarketService* - Information about instruments (Rest, implements **[IMarketService](https://github.com/InsightAppDev/TinkoffInvestNetSdk/blob/master/Insight.Tinkoff.Invest/Domain/Services/IMarketService.cs)**)
-* *OrderService* - Information about limit orders and their placement (Rest, implements **[IOrderService](https://github.com/InsightAppDev/TinkoffInvestNetSdk/blob/master/Insight.Tinkoff.Invest/Domain/Services/IOrderService.cs)**)
-* *PortfolioService* - Information about portfolio (Rest, implements **[IPortfolioService](https://github.com/InsightAppDev/TinkoffInvestNetSdk/blob/master/Insight.Tinkoff.Invest/Domain/Services/IPortfolioService.cs)**)
-* *OperationService* - Information about operations (Rest, implements **[IOperationService](https://github.com/InsightAppDev/TinkoffInvestNetSdk/blob/master/Insight.Tinkoff.Invest/Domain/Services/IOperationService.cs)**)
-* *SandboxService* - Interact with sandbox (Rest, implements **[ISandboxService](https://github.com/InsightAppDev/TinkoffInvestNetSdk/blob/master/Insight.Tinkoff.Invest/Domain/Services/ISandboxService.cs)**)
-* *StreamMarketService* - Interaction woth API throught WebSocket protocol (WebSocket, implements **[IStreamMarketService](https://github.com/InsightAppDev/TinkoffInvestNetSdk/blob/master/Insight.Tinkoff.Invest/Domain/Services/IStreamMarketService.cs)**)
+* *MarketService* - Information about instruments (Rest, implements **[IMarketService](https://github.com/InsightAppDev/Insight.Tinkoff.InvestSdk/blob/master/src/Insight.Tinkoff.InvestSdk/Services/IMarketService.cs)**)
+* *OrderService* - Information about limit orders and their placement (Rest, implements **[IOrderService](https://github.com/InsightAppDev/Insight.Tinkoff.InvestSdk/blob/master/src/Insight.Tinkoff.InvestSdk/Services/IOrderService.cs)**)
+* *PortfolioService* - Information about portfolio (Rest, implements **[IPortfolioService](https://github.com/InsightAppDev/Insight.Tinkoff.InvestSdk/blob/master/src/Insight.Tinkoff.InvestSdk/Services/IPortfolioService.cs)**)
+* *OperationService* - Information about operations (Rest, implements **[IOperationService](https://github.com/InsightAppDev/Insight.Tinkoff.InvestSdk/blob/master/src/Insight.Tinkoff.InvestSdk/Services/IOperationService.cs)**)
+* *SandboxService* - Interact with sandbox (Rest, implements **[ISandboxService](https://github.com/InsightAppDev/Insight.Tinkoff.InvestSdk/blob/master/src/Insight.Tinkoff.InvestSdk/Services/ISandboxService.cs)**)
+* *UserService* - Information about user (accounts) (Rest, implements **[IUserService](https://github.com/InsightAppDev/Insight.Tinkoff.InvestSdk/blob/master/src/Insight.Tinkoff.InvestSdk/Services/IUserService.cs)**)
+* *StreamMarketService* - Interaction woth API throught WebSocket protocol (WebSocket, implements **[IStreamMarketService](https://github.com/InsightAppDev/Insight.Tinkoff.InvestSdk/blob/master/src/Insight.Tinkoff.InvestSdk/Services/IStreamMarketService.cs)**)
 
-Все Rest сервисы инициализируются объектом конфигурации типа **RestConfiguration**:
-* *string AccessToken* - Токен доступа к API
-* *string BaseUrl* - Базовый адрес API, default = "https://api-invest.tinkoff.ru"
-* *bool SandboxMode* - Признак активна ли песочница, default = true
 
-StreamMarketService инициализируется объектом конфигурации типа **StreamConfiguration**:
-* *string AccessToken* - Токен доступа к API
-* *string Address* - Адрес, по которому доступен WebSocket, default = "wss://api-invest.tinkoff.ru/openapi/md/v1/md-openapi/ws"
+All Rest services initializes by **RestConfiguration**:
+* *string AccessToken* - Access token
+* *string BaseUrl* - Base address, default = "https://api-invest.tinkoff.ru"
+* *bool SandboxMode* - Is sandbox enabled, default = true
+
+StreamMarketService initializes by **StreamConfiguration**:
+* *string AccessToken* - Access token
+* *string Address* - WebSocket address, default = "wss://api-invest.tinkoff.ru/openapi/md/v1/md-openapi/ws"
+* *bool ResubscribeOnReconnect* - If true StreamMarketService will remember sended subscriptions and will resubscribe on reconnect
 
 StreamMarketService
 --------------------
