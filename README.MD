@@ -6,34 +6,37 @@ Unofficial Tinkoff Invest .Net Sdk
 
 About
 -------------------
-Данное sdk предназначено для взаимодействия с [OpenApi Тинькофф Инвестиций](https://tinkoffcreditsystems.github.io/invest-openapi/). Так как на момент публикации [официального sdk](https://github.com/TinkoffCreditSystems/invest-openapi-csharp-sdk) больше половины работы над данным проектом было закончено, я решил, что буду пользоваться им и поддерживать по мере возможности. Вопросы и предложения прошу в [Issues](https://github.com/InsightAppDev/TinkoffInvestNetSdk/issues).
+This is sdk for interact with [Tinkoff Invest OpenApi](https://tinkoffcreditsystems.github.io/invest-openapi/). Please, write your questions and suggestions to [issues](https://github.com/InsightAppDev/TinkoffInvestNetSdk/issues).
 
 Get started
 -------------------- 
-Для начала вам необходимо получить токен, процедура подробно описана [здесь](https://github.com/TinkoffCreditSystems/invest-openapi-csharp-sdk#где-взять-токен-аутентификации)
+Firstly get access token - [description of procedure](https://github.com/TinkoffCreditSystems/invest-openapi-csharp-sdk#где-взять-токен-аутентификации)
 
-Структура SDK
+Structure of SDK
 --------------------
-Взаимодействие с API происходит через следующие сервисы:
-* *MarketService* - Получение информации об инструментах (Rest, реализует **[IMarketService](https://github.com/InsightAppDev/TinkoffInvestNetSdk/blob/master/Insight.Tinkoff.Invest/Domain/Services/IMarketService.cs)**)
-* *OrderService* - Получение информации о лимитных заявках, а также их размещение (Rest, реализует **[IOrderService](https://github.com/InsightAppDev/TinkoffInvestNetSdk/blob/master/Insight.Tinkoff.Invest/Domain/Services/IOrderService.cs)**)
-* *PortfolioService* - Получение информации о портфолио (Rest, реализует **[IPortfolioService](https://github.com/InsightAppDev/TinkoffInvestNetSdk/blob/master/Insight.Tinkoff.Invest/Domain/Services/IPortfolioService.cs)**)
-* *OperationService* - Получение информации об операциях (Rest, реализует **[IOperationService](https://github.com/InsightAppDev/TinkoffInvestNetSdk/blob/master/Insight.Tinkoff.Invest/Domain/Services/IOperationService.cs)**)
-* *SandboxService* - Взаимодействие с песочницей (Rest, реализует **[ISandboxService](https://github.com/InsightAppDev/TinkoffInvestNetSdk/blob/master/Insight.Tinkoff.Invest/Domain/Services/ISandboxService.cs)**)
-* *StreamMarketService* - Взаимодействие с API по протоколу WebSocket (WebSocket, Реализует **[IStreamMarketService](https://github.com/InsightAppDev/TinkoffInvestNetSdk/blob/master/Insight.Tinkoff.Invest/Domain/Services/IStreamMarketService.cs)**)
+Interaction with the API occurs through the following services:
+* *MarketService* - Information about instruments (Rest, implements **[IMarketService](https://github.com/InsightAppDev/Insight.Tinkoff.InvestSdk/blob/master/src/Insight.Tinkoff.InvestSdk/Services/IMarketService.cs)**)
+* *OrderService* - Information about limit orders and their placement (Rest, implements **[IOrderService](https://github.com/InsightAppDev/Insight.Tinkoff.InvestSdk/blob/master/src/Insight.Tinkoff.InvestSdk/Services/IOrderService.cs)**)
+* *PortfolioService* - Information about portfolio (Rest, implements **[IPortfolioService](https://github.com/InsightAppDev/Insight.Tinkoff.InvestSdk/blob/master/src/Insight.Tinkoff.InvestSdk/Services/IPortfolioService.cs)**)
+* *OperationService* - Information about operations (Rest, implements **[IOperationService](https://github.com/InsightAppDev/Insight.Tinkoff.InvestSdk/blob/master/src/Insight.Tinkoff.InvestSdk/Services/IOperationService.cs)**)
+* *SandboxService* - Interact with sandbox (Rest, implements **[ISandboxService](https://github.com/InsightAppDev/Insight.Tinkoff.InvestSdk/blob/master/src/Insight.Tinkoff.InvestSdk/Services/ISandboxService.cs)**)
+* *UserService* - Information about user (accounts) (Rest, implements **[IUserService](https://github.com/InsightAppDev/Insight.Tinkoff.InvestSdk/blob/master/src/Insight.Tinkoff.InvestSdk/Services/IUserService.cs)**)
+* *StreamMarketService* - Interaction woth API throught WebSocket protocol (WebSocket, implements **[IStreamMarketService](https://github.com/InsightAppDev/Insight.Tinkoff.InvestSdk/blob/master/src/Insight.Tinkoff.InvestSdk/Services/IStreamMarketService.cs)**)
 
-Все Rest сервисы инициализируются объектом конфигурации типа **RestConfiguration**:
-* *string AccessToken* - Токен доступа к API
-* *string BaseUrl* - Базовый адрес API, default = "https://api-invest.tinkoff.ru"
-* *bool SandboxMode* - Признак активна ли песочница, default = true
 
-StreamMarketService инициализируется объектом конфигурации типа **StreamConfiguration**:
-* *string AccessToken* - Токен доступа к API
-* *string Address* - Адрес, по которому доступен WebSocket, default = "wss://api-invest.tinkoff.ru/openapi/md/v1/md-openapi/ws"
+All Rest services initializes by **RestConfiguration**:
+* *string AccessToken* - Access token
+* *string BaseUrl* - Base address, default = "https://api-invest.tinkoff.ru"
+* *bool SandboxMode* - Is sandbox enabled, default = true
+
+StreamMarketService initializes by **StreamConfiguration**:
+* *string AccessToken* - Access token
+* *string Address* - WebSocket address, default = "wss://api-invest.tinkoff.ru/openapi/md/v1/md-openapi/ws"
+* *bool ResubscribeOnReconnect* - If true StreamMarketService will remember sended subscriptions and will resubscribe on reconnect
 
 StreamMarketService
 --------------------
-Механизм взаимодействия взят из [официального sdk](https://github.com/TinkoffCreditSystems/invest-openapi-csharp-sdk). StreamMarketService реализует интерфейс IStreamMarketService:
+StreamMarketService implements IStreamMarketService:
 ```
 public interface IStreamMarketService
 {
@@ -43,8 +46,8 @@ public interface IStreamMarketService
 }
 ```
 
-Соотвественно метод Send служит для отправки сообщений на подписку/отписку от событий. Классы сообщений реализуют интерфейс *IWsMessage*: *SubscribeCandleMessage*, *UnsubscribeCandleMessage*, *SubscribeOrderBookMessage*, *UnsubscribeOrderBookMessage*, *SubscribeInstrumentInfoMessage*, *UnsubscribeInstrumentInfoMessage*, *CandleMessage*, *OrderBookMessage*, *InstrumentInfoMessage*. 
-giМетод AsObservable() реализован с помощью [System.Reactive](https://www.nuget.org/packages/System.Reactive/), а именно с помощью *Observable.FromEventPattern*, благодаря этому вы получаете Push коллекцию, в которую будут приходить сообщения типа IWsMessage (*CandleMessage*, *OrderBookMessage*, *InstrumentInfoMessage*). На выходе сообщения десериализуются в правильный тип на основе свойства Event интерфейса IWsMessage, вы можете использовать Pattern Matching. Пример кода:
+Send method alows you to send subcribe and unsubscrive messages. Messages types implements *IWsMessage*: *SubscribeCandleMessage*, *UnsubscribeCandleMessage*, *SubscribeOrderBookMessage*, *UnsubscribeOrderBookMessage*, *SubscribeInstrumentInfoMessage*, *UnsubscribeInstrumentInfoMessage*, *CandleMessage*, *OrderBookMessage*, *InstrumentInfoMessage*. 
+AsObservable() implemented via [System.Reactive](https://www.nuget.org/packages/System.Reactive/), it gives you Push collection, which will receive messages of type IWsMessage (*CandleMessage*, *OrderBookMessage*, *InstrumentInfoMessage*). Messages deserializes into right type using Event property, you can use Pattern Matching. Example:
 ```
 public sealed class Program {
   private StreamConfiguration _config;
@@ -95,6 +98,6 @@ public sealed class Program {
 }
 ```
 
-Тесты
+Tests
 ---------------
-Вы можете запустить примитивные тесты для Rest сервисов добавив в файл [Insight.Tinkoff.Invest.Tests/appsettings.json](https://github.com/InsightAppDev/TinkoffInvestNetSdk/blob/master/Insight.Tinkoff.Invest.Tests/appsettings.json) токен для сандбокса. По дефолту изменения файла игнорируются в .gitignore
+Tests running automatically by Travis 
