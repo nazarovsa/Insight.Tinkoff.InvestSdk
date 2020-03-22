@@ -29,7 +29,7 @@ namespace Insight.Tinkoff.InvestSdk.Services
 
             _configuration = configuration;
 
-            if (_configuration.ResubscribeOnReconnect)
+            if (_configuration.ReconnectEnabled && _configuration.ResubscribeOnReconnect)
                 _subscriptions = new SubscriptionsCollection();
         }
 
@@ -40,7 +40,7 @@ namespace Insight.Tinkoff.InvestSdk.Services
 
             await Task.Run(() => _client.Send(JSerializer.Serialize(message)), cancellationToken);
 
-            if (_configuration.ResubscribeOnReconnect)
+            if (_configuration.ReconnectEnabled && _configuration.ResubscribeOnReconnect)
                 _subscriptions.Push(message);
         }
 
@@ -72,13 +72,18 @@ namespace Insight.Tinkoff.InvestSdk.Services
                         clientWebSocket.Options.SetRequestHeader("Authorization",
                             $"Bearer {_configuration.AccessToken}");
                         return clientWebSocket;
-                    }), null);
+                    })
+                {
+                    IsReconnectionEnabled = _configuration.ReconnectEnabled,
+                    ReconnectTimeout = _configuration.ReconnectTimeout,
+                    ErrorReconnectTimeout = _configuration.ErrorReconnectTimeout
+                }, null);
             if (exchange != null)
                 return;
 
             await _client.Start();
 
-            if (_configuration.ResubscribeOnReconnect)
+            if (_configuration.ReconnectEnabled && _configuration.ResubscribeOnReconnect)
                 _reconnectionHandler = _client.ReconnectionHappened.Subscribe(x =>
                 {
                     foreach (var subscription in _subscriptions.Subscriptions)

@@ -31,8 +31,11 @@ All Rest services initializes by **RestConfiguration**:
 
 StreamMarketService initializes by **StreamConfiguration**:
 * *string AccessToken* - Access token
-* *string Address* - WebSocket address, default = "wss://api-invest.tinkoff.ru/openapi/md/v1/md-openapi/ws"
-* *bool ResubscribeOnReconnect* - If true StreamMarketService will remember sended subscriptions and will resubscribe on reconnect
+* *string Address* - WebSocket address, default - "wss://api-invest.tinkoff.ru/openapi/md/v1/md-openapi/ws"
+* *bool ResubscribeOnReconnect* - If true StreamMarketService will remember sended subscriptions and will resubscribe on reconnect, default - true
+* *bool ReconnectEnabled* - Enable reconnect, default - true
+* *TimeSpan ReconnectTimeout* - Time to reconnect from last message, default - 30 seconds
+* *TimeSpan ErrorReconnectTimeout* - Reconnect timeout on error, default - 60 seconds
 
 StreamMarketService
 --------------------
