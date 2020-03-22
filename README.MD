@@ -21,7 +21,7 @@ Interaction with the API occurs through the following services:
 * *OperationService* - Information about operations (Rest, implements **[IOperationService](https://github.com/InsightAppDev/Insight.Tinkoff.InvestSdk/blob/master/src/Insight.Tinkoff.InvestSdk/Services/IOperationService.cs)**)
 * *SandboxService* - Interact with sandbox (Rest, implements **[ISandboxService](https://github.com/InsightAppDev/Insight.Tinkoff.InvestSdk/blob/master/src/Insight.Tinkoff.InvestSdk/Services/ISandboxService.cs)**)
 * *UserService* - Information about user (accounts) (Rest, implements **[IUserService](https://github.com/InsightAppDev/Insight.Tinkoff.InvestSdk/blob/master/src/Insight.Tinkoff.InvestSdk/Services/IUserService.cs)**)
-* *StreamMarketService* - Interaction woth API throught WebSocket protocol (WebSocket, implements **[IStreamMarketService](https://github.com/InsightAppDev/Insight.Tinkoff.InvestSdk/blob/master/src/Insight.Tinkoff.InvestSdk/Services/IStreamMarketService.cs)**)
+* *StreamMarketService* - Interaction with API throught WebSocket protocol (WebSocket, implements **[IStreamMarketService](https://github.com/InsightAppDev/Insight.Tinkoff.InvestSdk/blob/master/src/Insight.Tinkoff.InvestSdk/Services/IStreamMarketService.cs)**)
 
 
 All Rest services initializes by **RestConfiguration**:
