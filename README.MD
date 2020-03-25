@@ -100,7 +100,3 @@ public sealed class Program {
   }
 }
 ```
-
-Tests
----------------
-Tests running automatically by Travis 
