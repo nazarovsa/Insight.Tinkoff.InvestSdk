@@ -1,3 +1,10 @@
+2.2.3
+==========================
+Fix
+--------------------------
+The parameter "figi" with en empty value removed from the path to disable "figi" filter at OperationService.Get
+
+
 2.2.2
 ==========================
 Update
