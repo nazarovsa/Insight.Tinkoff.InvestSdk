@@ -25,8 +25,13 @@ namespace Insight.Tinkoff.InvestSdk.Services
         {
             var from = HttpUtility.UrlEncode(filter.From.ToString("yyyy-MM-ddTHH:mm:ss.ffffffK"));
             var to = HttpUtility.UrlEncode(filter.To.ToString("yyyy-MM-ddTHH:mm:ss.ffffffK"));
+            var path = $"operations?from={from}&to={to}&interval={filter.Interval.GetEnumMemberAttributeValue()}{BrokerAccountIdQueryHelper.Get(brokerAccountId, "&")}";
+            
+            if(!string.IsNullOrEmpty(filter.Figi))
+                path += $"&figi={filter.Figi}";
+                
             return await _rest.Get<OperationsResponse>(
-                $"operations?from={from}&to={to}&interval={filter.Interval.GetEnumMemberAttributeValue()}&figi={filter.Figi}{BrokerAccountIdQueryHelper.Get(brokerAccountId, "&")}",
+                path,
                 cancellationToken);
         }
     }
