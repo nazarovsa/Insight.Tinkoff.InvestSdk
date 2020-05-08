@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Insight.Tinkoff.InvestSdk.Dto.Stream;
+using Insight.Tinkoff.InvestSdk.Infrastructure;
 using Xunit;
 
 namespace Insight.Tinkoff.InvestSdk.Tests

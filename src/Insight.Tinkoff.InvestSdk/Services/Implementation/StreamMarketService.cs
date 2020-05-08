@@ -4,6 +4,7 @@ using System.Reactive.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Insight.Tinkoff.InvestSdk.Dto.Stream;
+using Insight.Tinkoff.InvestSdk.Infrastructure;
 using Insight.Tinkoff.InvestSdk.Infrastructure.Configurations;
 using Insight.Tinkoff.InvestSdk.Infrastructure.Json;
 using Websocket.Client;
@@ -14,7 +15,7 @@ namespace Insight.Tinkoff.InvestSdk.Services
     {
         private WebsocketClient _client;
 
-        private bool Disposed { get; set; }
+        public bool Disposed { get; private set; }
 
         private readonly StreamConfiguration _configuration;
 
