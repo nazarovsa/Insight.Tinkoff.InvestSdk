@@ -15,6 +15,8 @@ namespace Insight.Tinkoff.InvestSdk.Infrastructure.Services
 
         protected string BaseUrl { get; }
 
+        private bool _clientInitialized;
+
         protected RestService(string baseUrl, HttpClient client = null)
         {
             if (string.IsNullOrWhiteSpace(baseUrl))
@@ -22,7 +24,6 @@ namespace Insight.Tinkoff.InvestSdk.Infrastructure.Services
 
             BaseUrl = baseUrl;
             Client = client;
-            EnsureHttpClientCreated();
         }
 
         internal virtual async Task<TO> Post<TI, TO>(string path, TI payload,
@@ -32,21 +33,24 @@ namespace Insight.Tinkoff.InvestSdk.Infrastructure.Services
             if (payload != null)
                 request.Content = new StringContent(JSerializer.Serialize(payload), Encoding.UTF8, "application/json");
 
-            var response = await Client.SendAsync(request, cancellationToken);
+            var client = EnsureHttpClientCreated();
+            var response = await client.SendAsync(request, cancellationToken);
             return await GetResponseItem<TO>(path, response);
         }
 
         internal virtual async Task<T> Get<T>(string path, CancellationToken cancellationToken = default)
         {
             var request = new HttpRequestMessage(HttpMethod.Get, path);
-            var response = await Client.SendAsync(request, cancellationToken);
+            var client = EnsureHttpClientCreated();
+            var response = await client.SendAsync(request, cancellationToken);
             return await GetResponseItem<T>(path, response);
         }
 
         internal virtual async Task<T> Delete<T>(string path, CancellationToken cancellationToken = default)
         {
             var request = new HttpRequestMessage(HttpMethod.Delete, path);
-            var response = await Client
+            var client = EnsureHttpClientCreated();
+            var response = await client
                 .SendAsync(request, cancellationToken);
             return await GetResponseItem<T>(path, response);
         }
@@ -58,7 +62,8 @@ namespace Insight.Tinkoff.InvestSdk.Infrastructure.Services
             if (payload != null)
                 request.Content = new StringContent(JSerializer.Serialize(payload), Encoding.UTF8, "application/json");
 
-            var response = await Client
+            var client = EnsureHttpClientCreated();
+            var response = await client
                 .SendAsync(request, cancellationToken);
             return await GetResponseItem<TO>(path, response);
         }
@@ -78,13 +83,19 @@ namespace Insight.Tinkoff.InvestSdk.Infrastructure.Services
         protected string GetRestServiceExceptionMessage(string path, HttpStatusCode code)
             => $"Ошибка в результате запроса к апи. Url: {path} Код: {(int) code}";
 
-        private void EnsureHttpClientCreated()
+        private HttpClient EnsureHttpClientCreated()
         {
-            if (Client == null)
-                Client = new HttpClient();
+	        if (!_clientInitialized)
+	        {
+		        if (Client == null)
+			        Client = new HttpClient();
 
-            Client.BaseAddress = new Uri(BaseUrl);
-            SetHeaders();
+		        Client.BaseAddress = new Uri(BaseUrl);
+		        SetHeaders();
+		        _clientInitialized = true;
+	        }
+
+	        return Client;
         }
 
         protected abstract void SetHeaders();
