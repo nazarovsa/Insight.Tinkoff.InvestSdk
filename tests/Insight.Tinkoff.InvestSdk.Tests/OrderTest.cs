@@ -15,9 +15,8 @@ namespace Insight.Tinkoff.InvestSdk.Tests
 
         public OrderTest()
         {
-            var client = new HttpClient();
-            _orderService = new OrderService(RestConfiguration, client);
-            _sandboxService = new SandboxService(RestConfiguration, client);
+            _orderService = new OrderService(RestConfiguration, new HttpClient());
+            _sandboxService = new SandboxService(RestConfiguration, new HttpClient());
         }
 
         [Fact]
