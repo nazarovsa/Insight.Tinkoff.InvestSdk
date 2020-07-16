@@ -83,7 +83,7 @@ namespace Insight.Tinkoff.InvestSdk.Infrastructure.Services
 
         private HttpClient EnsureHttpClientCreated()
         {
-            if (Client == null){}
+            if (Client == null)
                 Client = new HttpClient();
 
             Client.BaseAddress = new Uri(BaseUrl);
