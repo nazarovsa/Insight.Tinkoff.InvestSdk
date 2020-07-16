@@ -22,6 +22,7 @@ namespace Insight.Tinkoff.InvestSdk.Infrastructure.Services
 
             BaseUrl = baseUrl;
             Client = client;
+            EnsureHttpClientCreated();
         }
 
         internal virtual async Task<TO> Post<TI, TO>(string path, TI payload,
@@ -31,24 +32,21 @@ namespace Insight.Tinkoff.InvestSdk.Infrastructure.Services
             if (payload != null)
                 request.Content = new StringContent(JSerializer.Serialize(payload), Encoding.UTF8, "application/json");
 
-            var client = EnsureHttpClientCreated();
-            var response = await client.SendAsync(request, cancellationToken);
+            var response = await Client.SendAsync(request, cancellationToken);
             return await GetResponseItem<TO>(path, response);
         }
 
         internal virtual async Task<T> Get<T>(string path, CancellationToken cancellationToken = default)
         {
             var request = new HttpRequestMessage(HttpMethod.Get, path);
-            var client = EnsureHttpClientCreated();
-            var response = await client.SendAsync(request, cancellationToken);
+            var response = await Client.SendAsync(request, cancellationToken);
             return await GetResponseItem<T>(path, response);
         }
 
         internal virtual async Task<T> Delete<T>(string path, CancellationToken cancellationToken = default)
         {
             var request = new HttpRequestMessage(HttpMethod.Delete, path);
-            var client = EnsureHttpClientCreated();
-            var response = await client
+            var response = await Client
                 .SendAsync(request, cancellationToken);
             return await GetResponseItem<T>(path, response);
         }
@@ -60,8 +58,7 @@ namespace Insight.Tinkoff.InvestSdk.Infrastructure.Services
             if (payload != null)
                 request.Content = new StringContent(JSerializer.Serialize(payload), Encoding.UTF8, "application/json");
 
-            var client = EnsureHttpClientCreated();
-            var response = await client
+            var response = await Client
                 .SendAsync(request, cancellationToken);
             return await GetResponseItem<TO>(path, response);
         }
@@ -81,14 +78,13 @@ namespace Insight.Tinkoff.InvestSdk.Infrastructure.Services
         protected string GetRestServiceExceptionMessage(string path, HttpStatusCode code)
             => $"Ошибка в результате запроса к апи. Url: {path} Код: {(int) code}";
 
-        private HttpClient EnsureHttpClientCreated()
+        private void EnsureHttpClientCreated()
         {
             if (Client == null)
                 Client = new HttpClient();
 
             Client.BaseAddress = new Uri(BaseUrl);
             SetHeaders();
-            return Client;
         }
 
         protected abstract void SetHeaders();
