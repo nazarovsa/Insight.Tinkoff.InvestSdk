@@ -25,6 +25,8 @@ namespace Insight.Tinkoff.InvestSdk.Infrastructure.Services
                 throw new ArgumentNullException(nameof(configuration));
 
             Configuration = configuration;
+            Client.DefaultRequestHeaders.Authorization =
+                new AuthenticationHeaderValue("Bearer", Configuration.AccessToken);
         }
 
         internal override Task<T> Get<T>(string path, CancellationToken cancellationToken = default)
@@ -51,12 +53,6 @@ namespace Insight.Tinkoff.InvestSdk.Infrastructure.Services
         private string GetPath(string path)
         {
             return $"{(Configuration.SandboxMode ? SandboxBasePath : BasePath)}/{path}";
-        }
-
-        protected override void SetHeaders()
-        {
-            Client.DefaultRequestHeaders.Authorization =
-                new AuthenticationHeaderValue("Bearer", Configuration.AccessToken);
         }
     }
 }
