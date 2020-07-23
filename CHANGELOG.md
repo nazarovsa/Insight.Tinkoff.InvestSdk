@@ -1,3 +1,21 @@
+2.2.4
+==========================
+Add
+--------------------------
+* Add Type property to MarketInstrument
+* Add FaceValue property to OrderbookRestPayload
+* Add Name property to PortfolioPosition
+* Add BrokerAccountType enum
+
+Update
+-------------------------
+* AccountType at Account now have BrokerAccountType type instead string
+* Disposed property of StreamService now public with private setter 
+
+Fix
+-------------------------
+* Fix RestService wrong behavior: now HttpClient sets at ctor, EnsureHttpClientCreated and SetHeaders methods removed; Authorization header now sets at inheritor of RestService - TinkoffRestService.
+
 2.2.3
 ==========================
 Fix
