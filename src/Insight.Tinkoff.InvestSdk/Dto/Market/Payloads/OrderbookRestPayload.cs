@@ -15,7 +15,8 @@ namespace Insight.Tinkoff.InvestSdk.Dto.Payloads
             [JsonProperty("closePrice")] decimal closePrice,
             [JsonProperty("limitUp")] decimal limitUp,
             [JsonProperty("limitDown")] decimal limitDown,
-            [JsonProperty("tradeStatus")] Stream.TradeStatus tradeStatus)
+            [JsonProperty("faceValue")] decimal faceValue,
+            [JsonProperty("tradeStatus")] Enums.TradeStatus tradeStatus)
         {
             Figi = figi;
             Depth = depth;
@@ -25,12 +26,13 @@ namespace Insight.Tinkoff.InvestSdk.Dto.Payloads
             ClosePrice = closePrice;
             LimitUp = limitUp;
             LimitDown = limitDown;
+            FaceValue = faceValue;
             TradeStatus = tradeStatus;
         }
         
         public string Figi { get; set; }
         
-        public Stream.TradeStatus TradeStatus { get; set; }
+        public Enums.TradeStatus TradeStatus { get; set; }
 
         /// <summary>
         /// Глубина стакана
@@ -50,6 +52,11 @@ namespace Insight.Tinkoff.InvestSdk.Dto.Payloads
         public decimal MinPriceIncrement { get; set; }
         
         public decimal LastPrice { get; set; }
+        
+        /// <summary>
+        /// Номинал для облигаций
+        /// </summary>
+        public decimal FaceValue { get; set; }
         
         public decimal ClosePrice { get; set; }
         

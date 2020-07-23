@@ -2,6 +2,8 @@ namespace Insight.Tinkoff.InvestSdk.Dto
 {
     public sealed class PortfolioPosition
     {
+        public string Name { get; set; }
+        
         public string Figi { get; set; }
 
         public string Ticker { get; set; }

@@ -7,7 +7,7 @@ namespace Insight.Tinkoff.InvestSdk.Dto.Stream
         [JsonConstructor]
         public InstrumentInfoPayload(
             string figi,
-            [JsonProperty("trade_status")] TradeStatus tradeStatus,
+            [JsonProperty("trade_status")] Enums.TradeStatus tradeStatus,
             [JsonProperty("min_price_increment")] decimal minPriceIncrement,
             decimal lot,
             [JsonProperty("accrued_interest")] decimal? accruedInterest,
@@ -32,7 +32,7 @@ namespace Insight.Tinkoff.InvestSdk.Dto.Stream
         /// Статус торгов
         /// </summary>
         [JsonProperty]
-        public TradeStatus TradeStatus { get; private set; }
+        public Enums.TradeStatus TradeStatus { get; private set; }
 
         /// <summary>
         /// Шаг цены

@@ -24,6 +24,9 @@ namespace Insight.Tinkoff.InvestSdk.Infrastructure.Services
             if (configuration == null)
                 throw new ArgumentNullException(nameof(configuration));
 
+            if (string.IsNullOrWhiteSpace(configuration.AccessToken))
+                throw new ArgumentNullException(nameof(configuration.AccessToken));
+
             Configuration = configuration;
             Client.DefaultRequestHeaders.Authorization =
                 new AuthenticationHeaderValue("Bearer", Configuration.AccessToken);

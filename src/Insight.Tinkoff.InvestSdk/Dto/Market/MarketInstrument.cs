@@ -15,6 +15,8 @@ namespace Insight.Tinkoff.InvestSdk.Dto
         public int Lot { get; set; }
         
         public Currency Currency { get; set; }
+        
+        public InstrumentType Type { get; set; }
     }
     
     
