@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Net;
 using System.Net.Http;
+using System.Net.Http.Headers;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
@@ -11,6 +12,8 @@ namespace Insight.Tinkoff.InvestSdk.Infrastructure.Services
 {
     internal abstract class RestService
     {
+        private readonly string _baseUrl;
+
         protected HttpClient Client;
 
         protected RestService(string baseUrl, HttpClient client = null)
@@ -18,40 +21,54 @@ namespace Insight.Tinkoff.InvestSdk.Infrastructure.Services
             if (string.IsNullOrWhiteSpace(baseUrl))
                 throw new ArgumentNullException(nameof(baseUrl));
 
+            _baseUrl = baseUrl;
             Client = client ?? new HttpClient();
-            Client.BaseAddress = new Uri(baseUrl);
         }
 
-        internal virtual async Task<TO> Post<TI, TO>(string path, TI payload,
+        internal virtual async Task<TO> Post<TI, TO>(string path,
+            TI payload,
+            AuthenticationHeaderValue authorization = null,
             CancellationToken cancellationToken = default)
         {
-            var request = new HttpRequestMessage(HttpMethod.Post, path);
+            var request = new HttpRequestMessage(HttpMethod.Post, BuildUri(path));
             if (payload != null)
                 request.Content = new StringContent(JSerializer.Serialize(payload), Encoding.UTF8, "application/json");
-
+            if (authorization != null)
+                request.Headers.Authorization = authorization;
             var response = await Client.SendAsync(request, cancellationToken);
             return await GetResponseItem<TO>(path, response);
         }
 
-        internal virtual async Task<T> Get<T>(string path, CancellationToken cancellationToken = default)
+        internal virtual async Task<T> Get<T>(string path,
+            AuthenticationHeaderValue authorization = null,
+            CancellationToken cancellationToken = default)
         {
-            var request = new HttpRequestMessage(HttpMethod.Get, path);
+            var request = new HttpRequestMessage(HttpMethod.Get, BuildUri(path));
+            if (authorization != null)
+                request.Headers.Authorization = authorization;
             var response = await Client.SendAsync(request, cancellationToken);
             return await GetResponseItem<T>(path, response);
         }
 
-        internal virtual async Task<T> Delete<T>(string path, CancellationToken cancellationToken = default)
+        internal virtual async Task<T> Delete<T>(string path,
+            AuthenticationHeaderValue authorization = null,
+            CancellationToken cancellationToken = default)
         {
-            var request = new HttpRequestMessage(HttpMethod.Delete, path);
+            var request = new HttpRequestMessage(HttpMethod.Delete, BuildUri(path));
+            if (authorization != null)
+                request.Headers.Authorization = authorization;
             var response = await Client
                 .SendAsync(request, cancellationToken);
             return await GetResponseItem<T>(path, response);
         }
 
         internal virtual async Task<TO> Put<TI, TO>(string path, TI payload,
+            AuthenticationHeaderValue authorization = null,
             CancellationToken cancellationToken = default)
         {
-            var request = new HttpRequestMessage(HttpMethod.Post, path);
+            var request = new HttpRequestMessage(HttpMethod.Post, BuildUri(path));
+            if (authorization != null)
+                request.Headers.Authorization = authorization;
             if (payload != null)
                 request.Content = new StringContent(JSerializer.Serialize(payload), Encoding.UTF8, "application/json");
 
@@ -74,5 +91,10 @@ namespace Insight.Tinkoff.InvestSdk.Infrastructure.Services
 
         protected string GetRestServiceExceptionMessage(string path, HttpStatusCode code)
             => $"Ошибка в результате запроса к апи. Url: {path} Код: {(int) code}";
+
+        private string BuildUri(string path)
+        {
+            return new UriBuilder($"{_baseUrl.TrimEnd('/')}/{path.TrimStart('/')}").ToString();
+        }
     }
 }

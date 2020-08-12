@@ -28,15 +28,15 @@ namespace Insight.Tinkoff.InvestSdk.Infrastructure.Services
                 throw new ArgumentNullException(nameof(configuration.AccessToken));
 
             Configuration = configuration;
-            Client.DefaultRequestHeaders.Authorization =
-                new AuthenticationHeaderValue("Bearer", Configuration.AccessToken);
         }
 
-        internal override Task<T> Get<T>(string path, CancellationToken cancellationToken = default)
-            => base.Get<T>(GetPath(path), cancellationToken);
+        internal Task<T> Get<T>(string path, CancellationToken cancellationToken = default)
+            => base.Get<T>(GetPath(path), new AuthenticationHeaderValue("Bearer", Configuration.AccessToken),
+                cancellationToken);
 
-        internal override Task<TO> Post<TI, TO>(string path, TI payload, CancellationToken cancellationToken = default)
-            => base.Post<TI, TO>(GetPath(path), payload, cancellationToken);
+        internal Task<TO> Post<TI, TO>(string path, TI payload, CancellationToken cancellationToken = default)
+            => base.Post<TI, TO>(GetPath(path), payload,
+                new AuthenticationHeaderValue("Bearer", Configuration.AccessToken), cancellationToken);
 
         protected override async Task<T> GetResponseItem<T>(string path, HttpResponseMessage response)
         {
