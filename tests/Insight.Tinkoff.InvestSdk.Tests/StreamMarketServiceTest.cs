@@ -93,12 +93,13 @@ namespace Insight.Tinkoff.InvestSdk.Tests
 
             foreach (var candleMessage in cMessages)
             {
+                _testOutputHelper.WriteLine(
+                    $"[{DateTime.Now:HH:mm:ss.fff}]: {JsonConvert.SerializeObject(candleMessage)}\n");
+                
                 Assert.Equal(EventType.Candle, candleMessage.Event, StringComparer.OrdinalIgnoreCase);
                 Assert.NotNull(candleMessage.Event);
                 Assert.NotNull(candleMessage.Payload);
                 Assert.NotEmpty(candleMessage.Payload.Figi);
-                _testOutputHelper.WriteLine(
-                    $"[{DateTime.Now:HH:mm:ss.fff}]: {JsonConvert.SerializeObject(candleMessage)}\n");
             }
         }
     }

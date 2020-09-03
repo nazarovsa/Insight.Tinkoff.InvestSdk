@@ -47,7 +47,7 @@ namespace Insight.Tinkoff.InvestSdk.Services
 
         public IObservable<IWsMessage> AsObservable()
         {
-            EnsureSocketConnection().Wait();
+            EnsureSocketConnection().GetAwaiter().GetResult();
 
             return _client.MessageReceived
                 .Select(x => DeserializeMessage(x.Text));
@@ -79,19 +79,21 @@ namespace Insight.Tinkoff.InvestSdk.Services
                     ReconnectTimeout = _configuration.ReconnectTimeout,
                     ErrorReconnectTimeout = _configuration.ErrorReconnectTimeout
                 }, null);
+
             if (exchange != null)
                 return;
 
             await _client.Start();
 
             if (_configuration.ReconnectEnabled && _configuration.ResubscribeOnReconnect)
-                _reconnectionHandler = _client.ReconnectionHappened.Subscribe(x =>
-                {
-                    foreach (var subscription in _subscriptions.Subscriptions)
-                    {
-                        Send(subscription).Wait();
-                    }
-                });
+                _reconnectionHandler = _client.ReconnectionHappened
+                    .Subscribe(x => Resubscribe().GetAwaiter().GetResult());
+        }
+
+        private async Task Resubscribe()
+        {
+            foreach (var subscription in _subscriptions.Subscriptions)
+                await Send(subscription);
         }
 
         private IWsMessage DeserializeMessage(string message)
