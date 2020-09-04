@@ -38,14 +38,16 @@ namespace Insight.Tinkoff.InvestSdk.Infrastructure.Services
             => base.Post<TI, TO>(GetPath(path), payload,
                 new AuthenticationHeaderValue("Bearer", Configuration.AccessToken), cancellationToken);
 
-        protected override async Task<T> GetResponseItem<T>(string path, HttpResponseMessage response)
+        protected override async Task<T> GetResponseItem<T>(HttpResponseMessage response)
         {
             var json = await GetResponseString(response);
             if (response.StatusCode != HttpStatusCode.OK)
             {
                 var errorResponse = JSerializer.Deserialize<ErrorResponse>(json);
                 if (errorResponse == null)
-                    throw new RestServiceException(GetRestServiceExceptionMessage(path, response.StatusCode));
+                    throw new RestServiceException(
+                        GetRestServiceExceptionMessage(response.RequestMessage.RequestUri.ToString(),
+                            response.StatusCode));
 
                 throw new RestServiceException(errorResponse.Payload.Message, errorResponse);
             }

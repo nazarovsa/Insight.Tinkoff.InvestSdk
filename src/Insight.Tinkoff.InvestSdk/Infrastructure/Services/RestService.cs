@@ -36,7 +36,7 @@ namespace Insight.Tinkoff.InvestSdk.Infrastructure.Services
             if (authorization != null)
                 request.Headers.Authorization = authorization;
             var response = await Client.SendAsync(request, cancellationToken);
-            return await GetResponseItem<TO>(path, response);
+            return await GetResponseItem<TO>(response);
         }
 
         internal virtual async Task<T> Get<T>(string path,
@@ -47,7 +47,7 @@ namespace Insight.Tinkoff.InvestSdk.Infrastructure.Services
             if (authorization != null)
                 request.Headers.Authorization = authorization;
             var response = await Client.SendAsync(request, cancellationToken);
-            return await GetResponseItem<T>(path, response);
+            return await GetResponseItem<T>(response);
         }
 
         internal virtual async Task<T> Delete<T>(string path,
@@ -59,7 +59,7 @@ namespace Insight.Tinkoff.InvestSdk.Infrastructure.Services
                 request.Headers.Authorization = authorization;
             var response = await Client
                 .SendAsync(request, cancellationToken);
-            return await GetResponseItem<T>(path, response);
+            return await GetResponseItem<T>(response);
         }
 
         internal virtual async Task<TO> Put<TI, TO>(string path, TI payload,
@@ -74,23 +74,24 @@ namespace Insight.Tinkoff.InvestSdk.Infrastructure.Services
 
             var response = await Client
                 .SendAsync(request, cancellationToken);
-            return await GetResponseItem<TO>(path, response);
+            return await GetResponseItem<TO>(response);
         }
 
-        protected virtual async Task<T> GetResponseItem<T>(string path, HttpResponseMessage response)
+        protected virtual async Task<T> GetResponseItem<T>(HttpResponseMessage response)
         {
             var json = await GetResponseString(response);
             if (response.StatusCode != HttpStatusCode.OK)
-                throw new RestServiceException(GetRestServiceExceptionMessage(path, response.StatusCode));
+                throw new RestServiceException(
+                    GetRestServiceExceptionMessage(response.RequestMessage.RequestUri.ToString(), response.StatusCode));
 
             return JSerializer.Deserialize<T>(json);
         }
 
         protected async Task<string> GetResponseString(HttpResponseMessage response)
-            => Encoding.UTF8.GetString(await response.Content.ReadAsByteArrayAsync());
+            => await response.Content.ReadAsStringAsync();
 
-        protected string GetRestServiceExceptionMessage(string path, HttpStatusCode code)
-            => $"Ошибка в результате запроса к апи. Url: {path} Код: {(int) code}";
+        protected string GetRestServiceExceptionMessage(string uri, HttpStatusCode code)
+            => $"Ошибка в результате запроса к апи. Url: {uri} Код: {(int) code}";
 
         private string BuildUri(string path)
         {
