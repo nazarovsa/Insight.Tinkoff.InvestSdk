@@ -40,19 +40,19 @@ namespace Insight.Tinkoff.InvestSdk.Infrastructure.Services
 
         protected override async Task<T> GetResponseItem<T>(HttpResponseMessage response)
         {
-            var json = await GetResponseString(response);
+            var content = await GetResponseContentAsString(response);
             if (response.StatusCode != HttpStatusCode.OK)
             {
-                var errorResponse = JSerializer.Deserialize<ErrorResponse>(json);
+                var errorResponse = JSerializer.Deserialize<ErrorResponse>(content);
                 if (errorResponse == null)
                     throw new RestServiceException(
                         GetRestServiceExceptionMessage(response.RequestMessage.RequestUri.ToString(),
-                            response.StatusCode));
+                            response.StatusCode, content));
 
                 throw new RestServiceException(errorResponse.Payload.Message, errorResponse);
             }
 
-            return JSerializer.Deserialize<T>(json);
+            return JSerializer.Deserialize<T>(content);
         }
 
         private string GetPath(string path)
