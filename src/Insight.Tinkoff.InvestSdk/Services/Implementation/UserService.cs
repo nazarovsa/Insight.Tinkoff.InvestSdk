@@ -9,17 +9,17 @@ namespace Insight.Tinkoff.InvestSdk.Services
 {
     public sealed class UserService : IUserService
     {
-        private readonly TinkoffRestService _rest;
+        private readonly TinkoffHttpService _http;
 
         public UserService(
             RestConfiguration configuration, HttpClient client = null)
         {
-            _rest = new TinkoffRestService(configuration, client);
+            _http = new TinkoffHttpService(configuration, client);
         }
 
         public async Task<AccountsResponse> GetAccounts(CancellationToken cancellationToken = default)
         {
-            return await _rest.Get<AccountsResponse>("user/accounts", cancellationToken);
+            return await _http.Get<AccountsResponse>("user/accounts", cancellationToken: cancellationToken);
         }
     }
 }

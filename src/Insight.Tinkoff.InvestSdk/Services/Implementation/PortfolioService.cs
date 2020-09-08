@@ -1,8 +1,8 @@
-﻿using System.Net.Http;
+﻿using System.Collections.Generic;
+using System.Net.Http;
 using System.Threading;
 using System.Threading.Tasks;
 using Insight.Tinkoff.InvestSdk.Dto.Responses;
-using Insight.Tinkoff.InvestSdk.Infrastructure;
 using Insight.Tinkoff.InvestSdk.Infrastructure.Configurations;
 using Insight.Tinkoff.InvestSdk.Infrastructure.Services;
 
@@ -10,25 +10,37 @@ namespace Insight.Tinkoff.InvestSdk.Services
 {
     public sealed class PortfolioService : IPortfolioService
     {
-        private readonly TinkoffRestService _rest;
+        private readonly TinkoffHttpService _http;
 
         public PortfolioService(RestConfiguration configuration, HttpClient client = null)
         {
-            _rest = new TinkoffRestService(configuration, client);
+            _http = new TinkoffHttpService(configuration, client);
         }
 
         public async Task<CurrenciesResponse> GetCurrencies(string brokerAccountId = null,
-            CancellationToken token = default)
+            CancellationToken cancellationToken = default)
         {
-            return await _rest.Get<CurrenciesResponse>(
-                $"portfolio/currencies{BrokerAccountIdQueryHelper.Get(brokerAccountId, "?")}", token);
+            var query = new Dictionary<string, string>();
+
+            if (!string.IsNullOrWhiteSpace(brokerAccountId))
+                query.Add("brokerAccountId", brokerAccountId);
+
+            return await _http.Get<CurrenciesResponse>($"portfolio/currencies",
+                query,
+                cancellationToken: cancellationToken);
         }
 
         public async Task<PortfolioResponse> GetPortfolio(string brokerAccountId = null,
-            CancellationToken token = default)
+            CancellationToken cancellationToken = default)
         {
-            return await _rest.Get<PortfolioResponse>(
-                $"portfolio{BrokerAccountIdQueryHelper.Get(brokerAccountId, "?")}", token);
+            var query = new Dictionary<string, string>();
+
+            if (!string.IsNullOrWhiteSpace(brokerAccountId))
+                query.Add("brokerAccountId", brokerAccountId);
+
+            return await _http.Get<PortfolioResponse>("portfolio",
+                query,
+                cancellationToken: cancellationToken);
         }
     }
 }

@@ -1,4 +1,5 @@
-﻿using System.Net.Http;
+﻿using System.Collections.Generic;
+using System.Net.Http;
 using System.Threading;
 using System.Threading.Tasks;
 using Insight.Tinkoff.InvestSdk.Dto.Payloads;
@@ -11,43 +12,78 @@ namespace Insight.Tinkoff.InvestSdk.Services
 {
     public sealed class OrderService : IOrderService
     {
-        private readonly TinkoffRestService _rest;
+        private readonly TinkoffHttpService _http;
 
         public OrderService(RestConfiguration configuration, HttpClient client = null)
         {
-            _rest = new TinkoffRestService(configuration, client);
+            _http = new TinkoffHttpService(configuration, client);
         }
 
         public Task<EmptyResponse> Cancel(string orderId, string brokerAccountId = null,
             CancellationToken cancellationToken = default)
         {
-            return _rest.Post<object, EmptyResponse>(
-                $"orders/cancel?orderId={orderId}{BrokerAccountIdQueryHelper.Get(brokerAccountId, "&")}", null,
+            var query = new Dictionary<string, string>
+            {
+                {"orderId", orderId}
+            };
+
+            if (!string.IsNullOrWhiteSpace(brokerAccountId))
+                query.Add("brokerAccountId", brokerAccountId);
+
+            return _http.Post<EmptyResponse>("orders/cancel",
+                null,
+                query,
+                cancellationToken:
                 cancellationToken);
         }
 
         public Task<OrdersResponse> Get(string brokerAccountId = null, CancellationToken cancellationToken = default)
         {
-            return _rest.Get<OrdersResponse>($"orders{BrokerAccountIdQueryHelper.Get(brokerAccountId, "?")}",
-                cancellationToken);
+            var query = new Dictionary<string, string>();
+
+            if (!string.IsNullOrWhiteSpace(brokerAccountId))
+                query.Add("brokerAccountId", brokerAccountId);
+
+            return _http.Get<OrdersResponse>("orders",
+                query,
+                cancellationToken: cancellationToken);
         }
 
         public Task<LimitOrderResponse> PlaceLimitOrder(string figi,
             PlaceLimitOrderPayload payload, string brokerAccountId = null,
             CancellationToken cancellationToken = default)
         {
-            return _rest.Post<PlaceLimitOrderPayload, LimitOrderResponse>(
-                $"orders/limit-order?figi={figi}{BrokerAccountIdQueryHelper.Get(brokerAccountId, "&")}", payload,
-                cancellationToken);
+            var query = new Dictionary<string, string>
+            {
+                {"figi", figi}
+            };
+
+            if (!string.IsNullOrWhiteSpace(brokerAccountId))
+                query.Add("brokerAccountId", brokerAccountId);
+
+
+            return _http.Post<LimitOrderResponse>($"orders/limit-order",
+                payload,
+                query,
+                cancellationToken: cancellationToken);
         }
 
         public Task<MarketOrderResponse> PlaceMarketOrder(string figi,
             PlaceMarketOrderPayload payload, string brokerAccountId = null,
             CancellationToken cancellationToken = default)
         {
-            return _rest.Post<PlaceMarketOrderPayload, MarketOrderResponse>(
-                $"orders/market-order?figi={figi}{BrokerAccountIdQueryHelper.Get(brokerAccountId, "&")}", payload,
-                cancellationToken);
+            var query = new Dictionary<string, string>
+            {
+                {"figi", figi}
+            };
+
+            if (!string.IsNullOrWhiteSpace(brokerAccountId))
+                query.Add("brokerAccountId", brokerAccountId);
+
+            return _http.Post<MarketOrderResponse>($"orders/market-order",
+                payload,
+                query,
+                cancellationToken: cancellationToken);
         }
     }
 }
