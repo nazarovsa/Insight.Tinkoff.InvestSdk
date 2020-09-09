@@ -1,3 +1,11 @@
+2.2.6
+==========================
+Some rest client reworked
+
+2.2.5
+==========================
+Some rest client optimizations
+
 2.2.4
 ==========================
 Add
