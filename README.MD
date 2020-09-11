@@ -32,7 +32,7 @@ All Rest services initializes by **RestConfiguration**:
 StreamMarketService initializes by **StreamConfiguration**:
 * *string AccessToken* - Access token
 * *string Address* - WebSocket address, default - "wss://api-invest.tinkoff.ru/openapi/md/v1/md-openapi/ws"
-* *bool ResubscribeOnReconnect* - If true StreamMarketService will remember sended subscriptions and will resubscribe on reconnect, default - true
+* *bool ResubscribeOnReconnect* - If true StreamMarketService will remember sent subscriptions and will resubscribe on reconnect, default - true
 * *bool ReconnectEnabled* - Enable reconnect, default - true
 * *TimeSpan ReconnectTimeout* - Time to reconnect from last message, default - 30 seconds
 * *TimeSpan ErrorReconnectTimeout* - Reconnect timeout on error, default - 60 seconds
@@ -49,7 +49,7 @@ public interface IStreamMarketService
 }
 ```
 
-Send method alows you to send subcribe and unsubscrive messages. Messages types implements *IWsMessage*: *SubscribeCandleMessage*, *UnsubscribeCandleMessage*, *SubscribeOrderBookMessage*, *UnsubscribeOrderBookMessage*, *SubscribeInstrumentInfoMessage*, *UnsubscribeInstrumentInfoMessage*, *CandleMessage*, *OrderBookMessage*, *InstrumentInfoMessage*. 
+Send method alows you to send subscribe and unsubscribe messages. Messages types implements *IWsMessage*: *SubscribeCandleMessage*, *UnsubscribeCandleMessage*, *SubscribeOrderBookMessage*, *UnsubscribeOrderBookMessage*, *SubscribeInstrumentInfoMessage*, *UnsubscribeInstrumentInfoMessage*, *CandleMessage*, *OrderBookMessage*, *InstrumentInfoMessage*. 
 AsObservable() implemented via [System.Reactive](https://www.nuget.org/packages/System.Reactive/), it gives you Push collection, which will receive messages of type IWsMessage (*CandleMessage*, *OrderBookMessage*, *InstrumentInfoMessage*). Messages deserializes into right type using Event property, you can use Pattern Matching. Example:
 ```
 public sealed class Program {
