@@ -1,8 +1,12 @@
-Unofficial Tinkoff Invest .Net Sdk
+Unofficial Tinkoff Invest .Net Sdk [DEPRECATED]
 ====================
 [![Build Status](https://travis-ci.org/InsightAppDev/Insight.Tinkoff.InvestSdk.svg?branch=master)](https://travis-ci.org/InsightAppDev/Insight.Tinkoff.InvestSdk)
 [![nuget version](https://img.shields.io/nuget/v/Insight.Tinkoff.InvestSdk)](https://www.nuget.org/packages/Insight.Tinkoff.InvestSdk/)
 [![Nuget](https://img.shields.io/nuget/dt/Insight.Tinkoff.InvestSDK?color=%2300000)](https://www.nuget.org/packages/Insight.Tinkoff.InvestSdk/)
+
+[DEPRECATED]
+====================
+Repository and package deprecated because of new api presented. See this [issue](https://github.com/Tinkoff/invest-openapi-csharp-sdk/issues/108).
 
 About
 -------------------
